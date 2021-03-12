@@ -18,6 +18,7 @@ import net.progressit.scriptz.projectstouch.ProjectTouchRunnable.PTProjectIdenti
 import net.progressit.scriptz.projectstouch.ProjectTouchRunnable.PTProjectTouchAsyncEvent;
 import net.progressit.scriptz.projectstouch.ProjectTouchRunnable.ProjectIdentifyEventCode;
 import net.progressit.scriptz.projectstouch.ProjectTouchRunnable.ProjectTouchEventCode;
+import net.progressit.scriptz.swingsupport.LimitLinesDocumentListener;
 
 public class ProjectsTouch extends JInternalFrame implements ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;
