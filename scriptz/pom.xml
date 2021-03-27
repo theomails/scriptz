@@ -27,7 +27,7 @@
 						<configuration>
 							<archive>
 								<manifest>
-									<mainClass>net.progressit.backupzui.Main</mainClass>
+									<mainClass>net.progressit.scriptz.Main</mainClass>
 								</manifest>
 							</archive>
 							<descriptorRefs>
