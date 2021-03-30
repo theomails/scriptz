@@ -10,6 +10,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JMenuBar;
 
 import net.progressit.scriptz.scripts.DeskGet;
+import net.progressit.scriptz.scripts.DeskSdfUrl;
 import net.progressit.scriptz.scripts.DeskTextFormat;
 import net.progressit.scriptz.scripts.ProjectsTouch;
 
@@ -21,12 +22,14 @@ public class ScriptzUI extends JFrame{
 	//One button per Script as of now.
 	private JButton btnDeskGet = new JButton("Desk Get");
 	private JButton btnDeskTextFormat = new JButton("Desk Text Format");
+	private JButton btnDeskSdfUrl = new JButton("Desk SDF URL");
 	private JButton btnProjectsTouch = new JButton("Touch Projects");
 	public void init() {
 		setJMenuBar(mbMain);
 		setContentPane(dpMain);
 		
 		mbMain.add(btnDeskTextFormat);
+		mbMain.add(btnDeskSdfUrl);
 		mbMain.add(btnDeskGet);
 		mbMain.add(btnProjectsTouch);
 		
@@ -38,6 +41,12 @@ public class ScriptzUI extends JFrame{
 	private void addHandlers() {
 		btnDeskTextFormat.addActionListener( (e)->{ 
 			DeskTextFormat sif = new DeskTextFormat();
+			dpMain.add( sif );
+			sif.init();
+			showFrame(sif, true);			
+		} );
+		btnDeskSdfUrl.addActionListener( (e)->{ 
+			DeskSdfUrl sif = new DeskSdfUrl();
 			dpMain.add( sif );
 			sif.init();
 			showFrame(sif, true);			
