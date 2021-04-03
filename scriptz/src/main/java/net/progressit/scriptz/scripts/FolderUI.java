@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -36,9 +37,10 @@ public class FolderUI  extends JInternalFrame implements ScriptInternalFrame{
 	
 	private DrawPanel drawPanel = new DrawPanel();
 	private JScrollPane spDrawPanel = new JScrollPane(drawPanel);
-	private JPanel pnlBrowse = new JPanel(new MigLayout("insets 0", "[][grow, fill][][]", "[]"));
+	private JPanel pnlBrowse = new JPanel(new MigLayout("insets 0", "[][grow, fill][][][]", "[]"));
 	private JTextField tfPath = new JTextField();
 	private JButton btnBrowse = new JButton("Browse...");
+	private JCheckBox cbCountDisplay = new JCheckBox("Show No. of Files", false);
 	private JButton btnScan = new JButton("Scan");
 	private JPanel pnlStatus = new JPanel(new MigLayout("insets 0", "[grow, fill]", "[]"));
 	private JLabel lblStatus = new JLabel("Ready.");
@@ -50,6 +52,7 @@ public class FolderUI  extends JInternalFrame implements ScriptInternalFrame{
 		pnlBrowse.add(new JLabel("Folder to scan"));
 		pnlBrowse.add(tfPath);
 		pnlBrowse.add(btnBrowse);
+		pnlBrowse.add(cbCountDisplay);
 		pnlBrowse.add(btnScan);
 		
 		pnlStatus.add(lblStatus);
@@ -107,7 +110,7 @@ public class FolderUI  extends JInternalFrame implements ScriptInternalFrame{
 			new Thread( ()->{
 				
 				try {
-					FolderDetails details = scanner.scan( Paths.get(tfPath.getText()) );
+					FolderDetails details = scanner.scan(cbCountDisplay.isSelected(), Paths.get(tfPath.getText()) );
 					
 					SwingUtilities.invokeLater( ()->{
 						drawPanel.setDetails(details);
