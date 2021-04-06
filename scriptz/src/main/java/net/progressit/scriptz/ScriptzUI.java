@@ -17,6 +17,7 @@ import net.progressit.scriptz.scripts.DeskGet;
 import net.progressit.scriptz.scripts.DeskSdfUrl;
 import net.progressit.scriptz.scripts.DeskTextFormat;
 import net.progressit.scriptz.scripts.FolderUI;
+import net.progressit.scriptz.scripts.JsonFormat;
 import net.progressit.scriptz.scripts.ProjectsTouch;
 
 public class ScriptzUI extends JFrame{
@@ -33,6 +34,7 @@ public class ScriptzUI extends JFrame{
 	private JButton btnDeskTextFormat = new JButton("Desk Text Format");
 	private JButton btnDeskSdfUrl = new JButton("Desk SDF URL");
 	private JButton btnProjectsTouch = new JButton("Touch Projects");
+	private JButton btnFormatJson = new JButton("Format JSON");
 	private JButton btnFolderUI = new JButton("Folder UI");
 	private JButton btnBackupzUI = new JButton("Backupz UI");
 	public void init() {
@@ -43,6 +45,8 @@ public class ScriptzUI extends JFrame{
 		mbMain.add(btnDeskSdfUrl);
 		mbMain.add(btnDeskGet);
 		mbMain.add(btnProjectsTouch);
+		mbMain.add(Box.createHorizontalStrut(5));
+		mbMain.add(btnFormatJson);
 		mbMain.add(Box.createHorizontalStrut(5));
 		mbMain.add(btnFolderUI);
 		mbMain.add(btnBackupzUI);
@@ -73,6 +77,12 @@ public class ScriptzUI extends JFrame{
 		} );
 		btnProjectsTouch.addActionListener( (e)->{
 			ProjectsTouch sif = new ProjectsTouch();
+			dpMain.add( sif );
+			sif.init();
+			showFrame(sif, true);
+		} );
+		btnFormatJson.addActionListener( (e)->{
+			JsonFormat sif = new JsonFormat();
 			dpMain.add( sif );
 			sif.init();
 			showFrame(sif, true);
