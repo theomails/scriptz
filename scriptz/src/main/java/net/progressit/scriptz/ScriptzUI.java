@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 import com.google.inject.Inject;
 
 import net.progressit.scriptz.scripts.BackupzUI;
+import net.progressit.scriptz.scripts.CompressUI;
 import net.progressit.scriptz.scripts.DeskGet;
 import net.progressit.scriptz.scripts.DeskSdfUrl;
 import net.progressit.scriptz.scripts.DeskTextFormat;
@@ -36,6 +37,7 @@ public class ScriptzUI extends JFrame{
 	private JButton btnProjectsTouch = new JButton("Touch Projects");
 	private JButton btnFormatJson = new JButton("Format JSON");
 	private JButton btnFolderUI = new JButton("Folder UI");
+	private JButton btnCompressUI = new JButton("Compress UI");
 	private JButton btnBackupzUI = new JButton("Backupz UI");
 	public void init() {
 		setJMenuBar(mbMain);
@@ -49,6 +51,7 @@ public class ScriptzUI extends JFrame{
 		mbMain.add(btnFormatJson);
 		mbMain.add(Box.createHorizontalStrut(5));
 		mbMain.add(btnFolderUI);
+		mbMain.add(btnCompressUI);
 		mbMain.add(btnBackupzUI);
 		
 		
@@ -89,6 +92,12 @@ public class ScriptzUI extends JFrame{
 		} );
 		btnFolderUI.addActionListener( (e)->{
 			FolderUI sif = new FolderUI();
+			dpMain.add( sif );
+			sif.init();
+			showFrame(sif, true);
+		} );
+		btnCompressUI.addActionListener( (e)->{
+			CompressUI sif = new CompressUI();
 			dpMain.add( sif );
 			sif.init();
 			showFrame(sif, true);
