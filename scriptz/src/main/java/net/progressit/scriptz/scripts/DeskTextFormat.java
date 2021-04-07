@@ -41,6 +41,9 @@ public class DeskTextFormat  extends JInternalFrame implements ScriptInternalFra
 	private JPanel pnlButtons = new JPanel(new MigLayout("insets 0","[grow][]","[]"));
 	private JButton btnProcess = new JButton("Process");
 	
+	private JPanel pnlOutputs = new JPanel( new MigLayout("insets 0","[::150,grow,fill][grow,fill]","[grow, fill]") );
+	private JTextArea taCovered = new JTextArea();
+	private JScrollPane spCovered= new JScrollPane(taCovered);
 	private JTextArea taResult = new JTextArea();
 	private JScrollPane spResult = new JScrollPane(taResult);
 	@Override
@@ -51,7 +54,7 @@ public class DeskTextFormat  extends JInternalFrame implements ScriptInternalFra
 		outer.add(pnlButtons, "spanx 2, wrap");
 		outer.add(pnlInputs, "wrap");
 		outer.add(pnlButtons, "wrap");
-		outer.add(spResult, "");
+		outer.add(pnlOutputs, "");
 		
 		pnlButtons.add(new JLabel(""));
 		pnlButtons.add(btnProcess);
@@ -61,10 +64,16 @@ public class DeskTextFormat  extends JInternalFrame implements ScriptInternalFra
 		pnlInputs.add(spMsp);
 		pnlInputs.add(spScp);
 		
+		pnlOutputs.add(spCovered);
+		pnlOutputs.add(spResult);
+		
 		spSdpNow.setBorder(BorderFactory.createTitledBorder("SDP Now"));
 		spSdpYest.setBorder(BorderFactory.createTitledBorder("SDP Yest"));
 		spMsp.setBorder(BorderFactory.createTitledBorder("MSP"));
 		spScp.setBorder(BorderFactory.createTitledBorder("SCP"));
+		
+		spCovered.setBorder(BorderFactory.createTitledBorder("Covered tickets"));
+		spResult.setBorder(BorderFactory.createTitledBorder("PM Support addition"));
 		
 		//
 		pack();
@@ -77,7 +86,7 @@ public class DeskTextFormat  extends JInternalFrame implements ScriptInternalFra
 		bus.register(this);
 		
 		btnProcess.addActionListener( (e)->{
-			String result = bo.processAll( taSdpNow.getText(), taSdpYest.getText(), taMsp.getText(), taScp.getText() );
+			String result = bo.processAll( taSdpNow.getText(), taSdpYest.getText(), taMsp.getText(), taScp.getText(), taCovered.getText() );
 			taResult.setText(result);
 		} );
 	}
