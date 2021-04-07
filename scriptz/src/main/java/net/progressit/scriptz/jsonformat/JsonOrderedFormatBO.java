@@ -12,10 +12,14 @@ import com.google.gson.GsonBuilder;
 
 public class JsonOrderedFormatBO {
 	@SuppressWarnings("unchecked")
-	public String orderAndFormatJson(String inputJson) {
+	public String orderAndFormatJson(String inputJson, boolean prettyPrint, boolean serializeNulls) {
 		Map<String,Object> jsonData = new Gson().fromJson(inputJson, Map.class);
 		Map<String,Object> outOrderedData = getOrdered(jsonData);
-		return new GsonBuilder().setPrettyPrinting().serializeNulls().create().toJson(outOrderedData);
+		GsonBuilder gb = new GsonBuilder();
+		if(prettyPrint)  gb.setPrettyPrinting();
+		if(serializeNulls)  gb.serializeNulls();
+		Gson g = gb.create();
+		return g.toJson(outOrderedData);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

@@ -9,6 +9,7 @@ import java.awt.datatransfer.Transferable;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -38,8 +39,10 @@ public class JsonFormat  extends JInternalFrame implements ScriptInternalFrame{
 	private RSyntaxTextArea taInput = new RSyntaxTextArea();
 	private RTextScrollPane spInput = new RTextScrollPane(taInput);
 	
-	private JPanel pnlButtons = new JPanel(new MigLayout("insets 0","[grow][]10[]10[]","[]"));
+	private JPanel pnlButtons = new JPanel(new MigLayout("insets 0","[grow][]10[]5[]5[]10[]","[]"));
 	private JButton btnPaste = new JButton("Paste Input");
+	private JCheckBox cbPrettyPrint = new JCheckBox("Pretty print", true);
+	private JCheckBox cbSerializeNulls = new JCheckBox("Serialize Nulls", true);
 	private JButton btnFormat = new JButton("Format");
 	private JButton btnCopy = new JButton("Copy Result");
 	
@@ -56,6 +59,8 @@ public class JsonFormat  extends JInternalFrame implements ScriptInternalFrame{
 		
 		pnlButtons.add(new JLabel(""));
 		pnlButtons.add(btnPaste);
+		pnlButtons.add(cbPrettyPrint);
+		pnlButtons.add(cbSerializeNulls);
 		pnlButtons.add(btnFormat);
 		pnlButtons.add(btnCopy);
 		
@@ -84,7 +89,7 @@ public class JsonFormat  extends JInternalFrame implements ScriptInternalFrame{
 		} );
 		btnFormat.addActionListener( (e)->{
 			String text = taInput.getText();
-			String result = bo.orderAndFormatJson(text);
+			String result = bo.orderAndFormatJson(text, cbPrettyPrint.isSelected(), cbSerializeNulls.isSelected());
 			taResult.setText(result);
 		} );
 		btnCopy.addActionListener( (e)->{
