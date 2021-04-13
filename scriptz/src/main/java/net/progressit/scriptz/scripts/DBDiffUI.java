@@ -8,9 +8,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
@@ -33,7 +35,7 @@ public class DBDiffUI  extends JInternalFrame implements ScriptInternalFrame{
 	private final DBDiffBO bo = new DBDiffBO(bus);
 	
 	private JPanel pnlOuter = new JPanel(new MigLayout("","[grow, fill]","[][grow, fill]"));
-	private JTextArea taLog = new JTextArea();
+	private RSyntaxTextArea taLog = new RSyntaxTextArea();
 	private JScrollPane spLog = new JScrollPane(taLog);
 	
 	private JPanel pnlConnect = new JPanel(new MigLayout("","[][grow, fill]20[][grow, fill]20[][grow, fill][]20[]10[][]","[]"));
@@ -66,8 +68,10 @@ public class DBDiffUI  extends JInternalFrame implements ScriptInternalFrame{
 		taLog.getDocument().addDocumentListener(
 			    new LimitLinesDocumentListener(2999) );
 		
+		taLog.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JSON_WITH_COMMENTS);
+		taLog.setCodeFoldingEnabled(true);
+		
 		addHandlers();
-
 	}
 
 	private void addHandlers() {

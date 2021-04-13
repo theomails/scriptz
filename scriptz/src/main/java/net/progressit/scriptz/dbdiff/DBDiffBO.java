@@ -144,6 +144,7 @@ public class DBDiffBO {
 	}
 
 	private void loadDataInto(Multimap<String, Map<String, Object>> nowData) {
+		bus.post( new DbDiffLogEvent( "Grabbing new data..." ) );
 		Set<String> tables = interestedSchema.keySet();
 		StringBuilder sbSelect = new StringBuilder(2000);
 		for(String table:tables) {
@@ -175,7 +176,7 @@ public class DBDiffBO {
 				throw new RuntimeException(e);
 			}
 		}
-		
+		bus.post( new DbDiffLogEvent( "New data ready." ) );
 		
 	}
 
