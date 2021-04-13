@@ -14,6 +14,7 @@ import com.google.inject.Inject;
 
 import net.progressit.scriptz.scripts.BackupzUI;
 import net.progressit.scriptz.scripts.CompressUI;
+import net.progressit.scriptz.scripts.DBDiffUI;
 import net.progressit.scriptz.scripts.DeskGet;
 import net.progressit.scriptz.scripts.DeskSdfUrl;
 import net.progressit.scriptz.scripts.DeskTextFormat;
@@ -39,6 +40,7 @@ public class ScriptzUI extends JFrame{
 	private JButton btnFolderUI = new JButton("Folder UI");
 	private JButton btnCompressUI = new JButton("Compress UI");
 	private JButton btnBackupzUI = new JButton("Backupz UI");
+	private JButton btnDBDiffUI = new JButton("DB Diff UI");
 	public void init() {
 		setJMenuBar(mbMain);
 		setContentPane(dpMain);
@@ -53,6 +55,8 @@ public class ScriptzUI extends JFrame{
 		mbMain.add(btnFolderUI);
 		mbMain.add(btnCompressUI);
 		mbMain.add(btnBackupzUI);
+		mbMain.add(Box.createHorizontalStrut(5));
+		mbMain.add(btnDBDiffUI);
 		
 		
 		dpMain.setBackground(Color.gray);
@@ -104,6 +108,12 @@ public class ScriptzUI extends JFrame{
 		} );
 		btnBackupzUI.addActionListener( (e)->{
 			BackupzUI sif = new BackupzUI();
+			dpMain.add( sif );
+			sif.init();
+			showFrame(sif, true);
+		} );
+		btnDBDiffUI.addActionListener( (e)->{
+			DBDiffUI sif = new DBDiffUI();
 			dpMain.add( sif );
 			sif.init();
 			showFrame(sif, true);
