@@ -6,9 +6,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,6 +32,7 @@ public class DBDiffBO {
 	private Multimap<String, String> interestedSchema = MultimapBuilder.linkedHashKeys().arrayListValues().build();
 	private Multimap<String, Map<String, Object>> preData = MultimapBuilder.linkedHashKeys().arrayListValues().build();
 	private Multimap<String, Map<String, Object>> diffData = MultimapBuilder.linkedHashKeys().arrayListValues().build();
+	private static final List<String> SKIP_TABLES = Arrays.asList(new String[] {"columndetails","oidtype","uvhvalues"});
 	
 	private EventBus bus;
 	public DBDiffBO(EventBus bus) {
@@ -47,7 +50,6 @@ public class DBDiffBO {
 	         System.err.println(e.getClass().getName()+": "+e.getMessage());
 	         System.exit(0);
 	      }
-	      System.out.println("Opened database successfully");
 	      bus.post( new DbDiffLogEvent( "Opened database successfully." ) );
 	}
 
@@ -59,18 +61,21 @@ public class DBDiffBO {
 			DatabaseMetaData dbmd = con.getMetaData();
 			try (ResultSet tables = dbmd.getTables(null, "public", "%", new String[] { "TABLE" })) {
 			    while (tables.next()) {
-			    	System.out.println( tables.getString("TABLE_NAME") + ":" + tables.getString("TABLE_CAT") + ":" + tables.getString("TABLE_SCHEM") );
 			        String tableName = tables.getString("TABLE_NAME");
+			        if( SKIP_TABLES.contains(tableName) ) {
+			        	bus.post( new DbDiffLogEvent( String.format("Skipping too big table: %s", tableName) ) );
+			        	continue; //No need to even read data for some of the HUGE static tables.
+			        }
+			        
 			        try (ResultSet rs = dbmd.getColumns(null, "public", tableName, null)) {
 			            while (rs.next()) {
-			            	if(tableName.equals("attributes")) {
-			            		System.out.println( rs.getString("TABLE_CAT") );
-			            		System.out.println( rs.getString("TABLE_SCHEM") );
-			            		System.out.println( rs.getString("COLUMN_NAME") );
-			            		System.out.println( rs.getString("TYPE_NAME") );
-			            	}
 			            	String columnName = rs.getString("COLUMN_NAME"); //Also available: Column Size, Type Name, etc.
-			            	interestedSchema.put(tableName, columnName);
+			            	String typeName = rs.getString("TYPE_NAME"); //Also available: Column Size, Type Name, etc.
+			            	if(typeName.startsWith("bytea")) {
+			            		bus.post( new DbDiffLogEvent( String.format("Skipping un-diffable column: Column: %s, Type: %s", columnName, typeName) ) );
+			            	}else {
+			            		interestedSchema.put(tableName, columnName);
+			            	}
 			            }
 			        }
 			    }
@@ -79,11 +84,6 @@ public class DBDiffBO {
 			throw new RuntimeException(e);
 		}
 		
-		Set<String> tables = interestedSchema.keySet();
-		for(String table:tables) {
-			System.out.print( table + ": ");
-			System.out.println( interestedSchema.get(table) );
-		}
 		bus.post( new DbDiffLogEvent( "Completed." ) );
 	}
 
@@ -119,15 +119,18 @@ public class DBDiffBO {
 		bus.post( new DbDiffLogEvent( "Computing diff..." ) );
 		diffData.clear();
 		Set<String> tables = interestedSchema.keySet();
-		int rows = 0;
+		int rows = 0, size = 0;
+		Set<Map<String, Object>> setTablePreRows = new HashSet<>();
+		Set<Map<String, Object>> setTablePostRows = new HashSet<>();
 		for(String table:tables) {
-			if(table.equals("aaauserconfigrecord")) {
-				System.out.println("beep.");
-			}
+			long startnanos = System.nanoTime();
 			Collection<Map<String, Object>> tablePreRows = preData.get(table);
 			Collection<Map<String, Object>> tablePostRows = nowData.get(table);
-			Set<Map<String, Object>> setTablePreRows = new HashSet<>(tablePreRows);
-			Set<Map<String, Object>> setTablePostRows = new HashSet<>(tablePostRows);
+			setTablePreRows.clear();
+			setTablePostRows.clear();
+			setTablePreRows.addAll(tablePreRows);
+			setTablePostRows.addAll(tablePostRows);
+			size = setTablePostRows.size();
 			setTablePreRows.removeAll(tablePostRows);
 			setTablePostRows.removeAll(tablePreRows);
 			for(Map<String, Object> preOnlyRow:setTablePreRows) {
@@ -137,6 +140,12 @@ public class DBDiffBO {
 			for(Map<String, Object> postOnlyRow:setTablePostRows) {
 				diffData.put(table, postOnlyRow);
 				rows++;
+			}
+			long endnanos = System.nanoTime();
+			double diffnanos = (double)(endnanos-startnanos);
+			if(diffnanos>1e8) {
+				String msg = table + ": " + String.format("%.2f", diffnanos/1e9) + " for " + size + " rows.";
+				bus.post( new DbDiffLogEvent(msg));
 			}
 		}
 		Set<String> diffTables = diffData.keySet();
@@ -148,17 +157,17 @@ public class DBDiffBO {
 		Set<String> tables = interestedSchema.keySet();
 		StringBuilder sbSelect = new StringBuilder(2000);
 		for(String table:tables) {
+			
 			Collection<String> cols = interestedSchema.get(table);
 			sbSelect.setLength(0);
 			for(String col:cols) {
-				if(sbSelect.isEmpty()) sbSelect.append("Select ");
+				if(sbSelect.length()==0) sbSelect.append("Select ");
 				else sbSelect.append(", ");
 				sbSelect.append(col);
 			}
 			sbSelect.append(" from ").append(table);
 			
 			String select = sbSelect.toString();
-			System.out.println(select);
 			try(Statement st = con.createStatement();
 					ResultSet rs = st.executeQuery(select)) {
 	
@@ -166,7 +175,7 @@ public class DBDiffBO {
 				while(rs.next()) {
 					row = new HashMap<>();
 					for(String col:cols) {
-						String colVal = rs.getString(col);
+						Object colVal = rs.getObject(col);
 						row.put(col, colVal);
 					}
 					nowData.put(table, row);

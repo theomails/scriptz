@@ -98,8 +98,12 @@ public class DBDiffUI  extends JInternalFrame implements ScriptInternalFrame{
 	}
 	
 	private void log(String msg) {
-		taLog.append(msg);
-		taLog.getCaret().setDot(Integer.MAX_VALUE);
+		try {
+			taLog.append(msg);
+			taLog.getCaret().setDot( taLog.getText().length() );
+		} catch(Throwable e) {
+			System.err.println( e.toString() );
+		}
 	}
 	private void logLn(String msg) {
 		log(msg + "\n");
