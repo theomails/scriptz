@@ -41,6 +41,18 @@
 	</build>
 
 	<dependencies>
+		<!-- My Projects -->
+		<dependency>
+			<groupId>net.progressit</groupId>
+			<artifactId>backupzui</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.progressit</groupId>
+			<artifactId>ZAuth</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -53,11 +65,8 @@
 			<artifactId>rsyntaxtextarea</artifactId>
 			<version>3.1.2</version>
 		</dependency>
-		<dependency>
-			<groupId>net.progressit</groupId>
-			<artifactId>backupzui</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+
+
 		<dependency>
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
