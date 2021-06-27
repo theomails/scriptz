@@ -109,10 +109,27 @@ public class DeskGet  extends JInternalFrame implements ScriptInternalFrame{
 		new Thread( ()->{
 			String ticketNumbers = txtTicketNumbers.getText();
 			String[] arrTicketNos = ticketNumbers.split("\\n");
+			addHeader();
 			for(String ticketNo:arrTicketNos) {
 				processTicket(ticketNo);
 			}
+			addFooter();
 		} ).start();
+	}
+	private void addHeader() {
+		resultLnAsync("<!doctype html>\n"
+				+ "<html>\n"
+				+ "<head>\n"
+				+ "</head>\n"
+				+ "<body>\n"
+				+ "<table border='1'>");
+	}
+	private void addFooter() {
+		resultLnAsync("\n"
+				+ "</table>\n"
+				+ "\n"
+				+ "</body>\n"
+				+ "</html>");
 	}
 	
 	private void processTicket(String ticketNo) {
@@ -121,7 +138,8 @@ public class DeskGet  extends JInternalFrame implements ScriptInternalFrame{
 			ticket = bo.getPortalTicket(ticketNo);
 			if(ticket!=null) {
 				StringBuilder sb = new StringBuilder(500);
-
+				sb.append("<tr><td>");
+				
 				sb.append(ticket.getTicketNumber());
 				sb.append("\t").append(ticket.getSubject());
 				sb.append("    ");
@@ -132,6 +150,8 @@ public class DeskGet  extends JInternalFrame implements ScriptInternalFrame{
 				sb.append("Assignee: ").append(asString(ticket.getAssignee()));
 				sb.append("\n");
 				
+				sb.append("</td></tr>").append("<tr><td>");
+				
 				sb.append("History: ");
 				sb.append("\n");	
 				for(String historyRow:ticket.getHistorySummary()) {
@@ -139,6 +159,7 @@ public class DeskGet  extends JInternalFrame implements ScriptInternalFrame{
 					sb.append("\n");							
 				}
 				
+				sb.append("</td></tr>").append("<tr><td>&nbsp;").append("</td></tr>");
 				resultLnAsync(sb.toString());
 			}else {
 				resultLnAsync("No ticket details for: " + ticketNo);
