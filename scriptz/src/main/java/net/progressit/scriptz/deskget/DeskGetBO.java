@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.eventbus.EventBus;
 import com.google.gson.Gson;
 
 import lombok.Data;
@@ -18,9 +19,17 @@ public class DeskGetBO {
 	private static final SimpleDateFormat SDF_PARSE = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 	private static final SimpleDateFormat SDF_FORMAT = new SimpleDateFormat("dd MMMM h:mm a");
 	
-	
+	private EventBus bus;
 	private DeskGetAccessBO accessBo = new DeskGetAccessBO();
 	private String accessToken = null;
+	public DeskGetBO(EventBus bus) {
+		this.bus = bus;
+	}
+	
+	@Data
+	public static class DeskGetLogEventAsync{
+		private final String msg;
+	}
 	
 	@Data
 	public static class DeskTicketList{
@@ -69,6 +78,7 @@ public class DeskGetBO {
 	public DeskTicket getPortalTicket(String ticketNumber) throws IOException{
 		if(accessToken==null) accessToken = accessBo.getAccessToken();
 		
+		bus.post(new DeskGetLogEventAsync("\nSearching ticket details: " + ticketNumber + " ..."));
 		String url = BASE_URL + "/tickets/search?limit=1&ticketNumber="+ticketNumber;
 		Request request = new Request.Builder().get().url( url ).addHeader("Authorization", "Zoho-oauthtoken "+accessToken).build();
 		Response response = accessBo.getClient().newCall(request).execute();
@@ -79,8 +89,10 @@ public class DeskGetBO {
 		//System.out.println( sResponse );
 		//System.out.println( ticket );
 		
+		bus.post(new DeskGetLogEventAsync("\nLoading history: " + ticketNumber + " ..."));
 		loadHistory(ticket);
 		
+		bus.post(new DeskGetLogEventAsync("\nDone: " + ticketNumber));
 		return ticket;
 	}
 	
@@ -102,12 +114,15 @@ public class DeskGetBO {
 		//System.out.println( ticket );
 	}
 	
+	@SuppressWarnings("unchecked")
 	private List<String> historySummarize(DeskHistoryList list, String ticketNumber){
 		List<String> res = new ArrayList<>();
 		if(list.getData()==null || list.getData().size()==0) return res;
 		
 		int histRow = 1;
+		bus.post(new DeskGetLogEventAsync("\n"));
 		for(DeskHistory hist:list.getData()){
+			bus.post(new DeskGetLogEventAsync(" " + histRow + " : " + hist.getEventName()));
 			System.out.println("#" + ticketNumber + " : " + histRow++);
 			System.out.println(hist);
 			String event = hist.getEventName().toLowerCase();
@@ -123,7 +138,7 @@ public class DeskGetBO {
 							updatedContent = (String) propertyValue.get("updatedValue");
 						}
 						String output = eventTitle(hist, "Comment") + updatedContent;
-						res.add(output);
+						addRes(res, output);
 					}
 				}
 			}else if(event.contains("ticketupdated")){
@@ -137,14 +152,14 @@ public class DeskGetBO {
 						Map<String, Object> updatedContent = (Map<String, Object>) propertyValue.get("updatedValue");
 						if(updatedContent==null) continue;
 						String output = eventTitle(hist, "Team") + updatedContent.get("name");
-						res.add(output);
+						addRes(res, output);
 					}else if(propertyName.equals("Case Owner")){
 						Map<String, Object> propertyValue = (Map<String, Object>)eventItem.get("propertyValue");
 						if(propertyValue==null) continue;
 						Map<String, Object> updatedContent = (Map<String, Object>) propertyValue.get("updatedValue");
 						if(updatedContent==null) continue;
 						String output = eventTitle(hist, "Case Owner") + updatedContent.get("name");
-						res.add(output);
+						addRes(res, output);
 					}
 				}
 			}
@@ -152,6 +167,12 @@ public class DeskGetBO {
 		
 		return res;
 	}
+	
+	private void addRes(List<String> res, String output) {
+		bus.post(new DeskGetLogEventAsync(" ADDED"));
+		res.add(output);
+	}
+	
 	private String eventTitle(DeskHistory hist, String eventNiceName){
 		return eventNiceName + " [By "+ safeAuthorName(hist) +", On "+ safeDateStr(hist.eventTime) +"]: ";
 	}

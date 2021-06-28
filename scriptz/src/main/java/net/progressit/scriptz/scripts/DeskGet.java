@@ -1,6 +1,9 @@
 package net.progressit.scriptz.scripts;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JButton;
@@ -12,46 +15,37 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 
-import lombok.Data;
 import net.miginfocom.swing.MigLayout;
 import net.progressit.scriptz.deskget.DeskGetBO;
+import net.progressit.scriptz.deskget.DeskGetBO.DeskGetLogEventAsync;
 import net.progressit.scriptz.deskget.DeskGetBO.DeskPerson;
 import net.progressit.scriptz.deskget.DeskGetBO.DeskTicket;
 
 public class DeskGet  extends JInternalFrame implements ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;
 
+
 	public DeskGet() {
 		super("Desk Get", true, true, true, true);
 	}
 	
-	public enum PortalNodeId{
-		ROOT, ALL_PORTALS
-	}
-	@Data
-	public static class PortalNodeObject{
-		private final PortalNodeId nodeId;
-		private final String nodeDisplayName;
-		@Override
-		public String toString() {
-			return nodeDisplayName;
-		}
-	}
-	
 	//Interal bus for this script.
 	private final EventBus bus = new EventBus();
-	private final DeskGetBO bo = new DeskGetBO();
+	private final DeskGetBO bo = new DeskGetBO(bus);
 
 	private JPanel outer = new JPanel(new MigLayout("","[200:200:200, grow, fill][600:800:, grow, fill]","[][grow,fill][200::200, grow, fill]"));
 	
-	private JPanel pnlButtons = new JPanel(new MigLayout("insets 0","[grow][]","[]"));
+	private JPanel pnlButtons = new JPanel(new MigLayout("insets 0","[grow][][]","[]"));
 	private JTextArea txtTicketNumbers = new JTextArea();
 	private JScrollPane spTicketNumbers = new JScrollPane(txtTicketNumbers);
-	private JTextArea txtTicketDetails = new JTextArea();
-	private JScrollPane spTicketDetails = new JScrollPane(txtTicketDetails);
+	private JTextArea taTicketDetails = new JTextArea();
+	private JScrollPane spTicketDetails = new JScrollPane(taTicketDetails);
 	
 	private JButton btnFetch = new JButton("Fetch");
+	private JButton btnOpen = new JButton("Open");
+	
 	private JTextArea taLog = new JTextArea();
 	private JScrollPane spLog = new JScrollPane(taLog);
 	@Override
@@ -66,9 +60,10 @@ public class DeskGet  extends JInternalFrame implements ScriptInternalFrame{
 		
 		pnlButtons.add(new JLabel(""));
 		pnlButtons.add(btnFetch);
+		pnlButtons.add(btnOpen);
 		
 		taLog.setLineWrap(true);
-		txtTicketDetails.setLineWrap(true);
+		taTicketDetails.setLineWrap(true);
 		
 		//
 		pack();
@@ -84,13 +79,15 @@ public class DeskGet  extends JInternalFrame implements ScriptInternalFrame{
 		log(msg + "\n");
 	}
 	private void result(String msg) {
-		txtTicketDetails.append(msg);
-		txtTicketDetails.getCaret().setDot(Integer.MAX_VALUE);
+		taTicketDetails.append(msg);
+		taTicketDetails.getCaret().setDot(Integer.MAX_VALUE);
 	}
 	private void resultLn(String msg) {
 		result(msg + "\n");
 	}
-	
+	private void logAsync(String msg) {
+		SwingUtilities.invokeLater( ()->{ log(msg); } );
+	}	
 	private void logLnAsync(String msg) {
 		SwingUtilities.invokeLater( ()->{ logLn(msg); } );
 	}
@@ -102,6 +99,25 @@ public class DeskGet  extends JInternalFrame implements ScriptInternalFrame{
 		bus.register(this);
 		btnFetch.addActionListener( (e)->{
 			processTicketsAsync();
+		} );
+		btnOpen.addActionListener( (e)->{
+			String result = taTicketDetails.getText();
+			File outFile = new File(System.getProperty("user.home"), "scriptz-desk-get.html");
+			try(FileWriter fw = new FileWriter(outFile)){
+				fw.write(result);
+			} catch (IOException e1) {
+				System.err.println(e1.toString());
+				e1.printStackTrace();
+				logLn("Error while writing and opening file: " + e1.toString());
+			}
+			
+			try {
+				Desktop.getDesktop().open(outFile);
+			} catch (IOException e1) {
+				System.err.println(e1.toString());
+				e1.printStackTrace();
+				logLn("Error while writing and opening file: " + e1.toString());
+			}
 		} );
 	}
 	
@@ -130,6 +146,11 @@ public class DeskGet  extends JInternalFrame implements ScriptInternalFrame{
 				+ "\n"
 				+ "</body>\n"
 				+ "</html>");
+	}
+	
+	@Subscribe
+	public void process(DeskGetLogEventAsync e) {
+		logAsync(e.getMsg());
 	}
 	
 	private void processTicket(String ticketNo) {
