@@ -3,7 +3,6 @@ package net.progressit.scriptz.scripts;
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -13,6 +12,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import net.miginfocom.swing.MigLayout;
+import net.progressit.scriptz.core.ScriptInternalFrame;
 import net.progressit.scriptz.projectstouch.ProjectTouchRunnable;
 import net.progressit.scriptz.projectstouch.ProjectTouchRunnable.PTProjectIdentifiedAsyncEvent;
 import net.progressit.scriptz.projectstouch.ProjectTouchRunnable.PTProjectTouchAsyncEvent;
@@ -20,7 +20,7 @@ import net.progressit.scriptz.projectstouch.ProjectTouchRunnable.ProjectIdentify
 import net.progressit.scriptz.projectstouch.ProjectTouchRunnable.ProjectTouchEventCode;
 import net.progressit.scriptz.swingsupport.LimitLinesDocumentListener;
 
-public class ProjectsTouch extends JInternalFrame implements ScriptInternalFrame{
+public class ProjectsTouch extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;
 
 	public ProjectsTouch() {

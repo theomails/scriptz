@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,9 +12,10 @@ import javax.swing.JTextArea;
 import com.google.common.eventbus.EventBus;
 
 import net.miginfocom.swing.MigLayout;
+import net.progressit.scriptz.core.ScriptInternalFrame;
 import net.progressit.scriptz.desktextformat.DeskTextFormatBO;
 
-public class DeskTextFormat  extends JInternalFrame implements ScriptInternalFrame{
+public class DeskTextFormat  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;
 
 	public DeskTextFormat() {

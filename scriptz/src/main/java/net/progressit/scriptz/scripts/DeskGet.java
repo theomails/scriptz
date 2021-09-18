@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JButton;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -18,12 +17,13 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import net.miginfocom.swing.MigLayout;
+import net.progressit.scriptz.core.ScriptInternalFrame;
 import net.progressit.scriptz.deskget.DeskGetBO;
 import net.progressit.scriptz.deskget.DeskGetBO.DeskGetLogEventAsync;
 import net.progressit.scriptz.deskget.DeskGetBO.DeskPerson;
 import net.progressit.scriptz.deskget.DeskGetBO.DeskTicket;
 
-public class DeskGet  extends JInternalFrame implements ScriptInternalFrame{
+public class DeskGet  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;
 
 

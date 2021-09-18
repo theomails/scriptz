@@ -10,7 +10,6 @@ import java.awt.datatransfer.Transferable;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -21,9 +20,10 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 import com.google.common.eventbus.EventBus;
 
 import net.miginfocom.swing.MigLayout;
+import net.progressit.scriptz.core.ScriptInternalFrame;
 import net.progressit.scriptz.jsonformat.JsonOrderedFormatBO;
 
-public class JsonFormat  extends JInternalFrame implements ScriptInternalFrame{
+public class JsonFormat  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;
 
 	public JsonFormat() {

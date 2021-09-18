@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,11 +19,12 @@ import javax.swing.SwingUtilities;
 import com.google.common.eventbus.EventBus;
 
 import net.miginfocom.swing.MigLayout;
+import net.progressit.scriptz.core.ScriptInternalFrame;
 import net.progressit.scriptz.folderui.DrawPanel;
 import net.progressit.scriptz.folderui.Scanner;
 import net.progressit.scriptz.folderui.Scanner.FolderDetails;
 
-public class FolderUI  extends JInternalFrame implements ScriptInternalFrame{
+public class FolderUI  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;
 
 	public FolderUI() {

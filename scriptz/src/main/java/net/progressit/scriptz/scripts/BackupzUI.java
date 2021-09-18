@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.beans.PropertyVetoException;
 
 import javax.swing.JButton;
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 
 import com.google.common.eventbus.EventBus;
@@ -14,8 +13,9 @@ import net.miginfocom.swing.MigLayout;
 import net.progressit.backupzui.Main;
 import net.progressit.backupzui.logic.BackupService;
 import net.progressit.backupzui.ui.RunBackupPanel;
+import net.progressit.scriptz.core.ScriptInternalFrame;
 
-public class BackupzUI  extends JInternalFrame implements ScriptInternalFrame{
+public class BackupzUI  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;
 
 	//Interal bus for this script.

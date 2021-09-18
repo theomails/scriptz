@@ -1,6 +1,9 @@
 package net.progressit.scriptz;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Singleton;
+
+import net.progressit.scriptz.core.ScriptLocalStateService;
 
 public class LiveModule extends AbstractModule{
 
@@ -10,6 +13,7 @@ public class LiveModule extends AbstractModule{
 		binder().requireExplicitBindings();
 		binder().requireAtInjectOnConstructors();
 		
+		bind(ScriptLocalStateService.class).in(Singleton.class);
 		bind(ScriptzUI.class);
 		
 	}

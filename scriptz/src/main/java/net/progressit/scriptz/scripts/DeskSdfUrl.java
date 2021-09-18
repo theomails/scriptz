@@ -8,7 +8,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -19,9 +18,10 @@ import javax.swing.ListSelectionModel;
 import com.google.common.eventbus.EventBus;
 
 import net.miginfocom.swing.MigLayout;
+import net.progressit.scriptz.core.ScriptInternalFrame;
 import net.progressit.scriptz.desktextformat.DeskSdfUrlBO;
 
-public class DeskSdfUrl  extends JInternalFrame implements ScriptInternalFrame{
+public class DeskSdfUrl  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;
 
 	public DeskSdfUrl() {

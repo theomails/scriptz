@@ -1,137 +1,86 @@
 package net.progressit.scriptz;
 
 import java.awt.Color;
-import java.beans.PropertyVetoException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JMenuBar;
 
 import com.google.inject.Inject;
 
-import net.progressit.scriptz.scripts.BackupzUI;
-import net.progressit.scriptz.scripts.CompressUI;
-import net.progressit.scriptz.scripts.DBDiffUI;
-import net.progressit.scriptz.scripts.DeskGet;
-import net.progressit.scriptz.scripts.DeskSdfUrl;
-import net.progressit.scriptz.scripts.DeskTextFormat;
-import net.progressit.scriptz.scripts.FolderUI;
-import net.progressit.scriptz.scripts.JsonFormat;
-import net.progressit.scriptz.scripts.ProjectsTouch;
+import lombok.Data;
+import net.progressit.scriptz.core.ScriptAppResourceDefinition;
+import net.progressit.scriptz.core.ScriptLocalStateService;
 
 public class ScriptzUI extends JFrame{
 	private static final long serialVersionUID = 1L;
+	
+	@Data
+	public static class ScriptzCoreConfig{
+		private Map<String, Boolean> scriptStatus = new LinkedHashMap<>();
+	}
 
+	private ScriptzCoreConfig coreConfig;
+	private final Map<String, ScriptAppResourceDefinition> loadedDefinitions = new LinkedHashMap<>(); 
+	private ScriptLocalStateService localStateService;
 	@Inject
-	public ScriptzUI() {
+	public ScriptzUI(ScriptLocalStateService localStateService) {
+		this.localStateService = localStateService;
 	}
 	
 	private JDesktopPane dpMain = new JDesktopPane();
 	private JMenuBar mbMain = new JMenuBar();
-	//One button per Script as of now.
-	private JButton btnDeskGet = new JButton("Desk Get");
-	private JButton btnDeskTextFormat = new JButton("Desk Text Format");
-	private JButton btnDeskSdfUrl = new JButton("Desk SDF URL");
-	private JButton btnProjectsTouch = new JButton("Touch Projects");
-	private JButton btnFormatJson = new JButton("Format JSON");
-	private JButton btnFolderUI = new JButton("Folder UI");
-	private JButton btnCompressUI = new JButton("Compress UI");
-	private JButton btnBackupzUI = new JButton("Backupz UI");
-	private JButton btnDBDiffUI = new JButton("DB Diff UI");
+
 	public void init() {
 		setJMenuBar(mbMain);
 		setContentPane(dpMain);
 		
-		mbMain.add(btnDeskTextFormat);
-		mbMain.add(btnDeskSdfUrl);
-		mbMain.add(btnDeskGet);
-		mbMain.add(btnProjectsTouch);
-		mbMain.add(Box.createHorizontalStrut(5));
-		mbMain.add(btnFormatJson);
-		mbMain.add(Box.createHorizontalStrut(5));
-		mbMain.add(btnFolderUI);
-		mbMain.add(btnCompressUI);
-		mbMain.add(btnBackupzUI);
-		mbMain.add(Box.createHorizontalStrut(5));
-		mbMain.add(btnDBDiffUI);
-		
+		loadDefinitions();
+		Set<String> loadedClasses = loadedDefinitions.keySet();
+		loadToolBar(loadedClasses);
 		
 		dpMain.setBackground(Color.gray);
-		addHandlers();
 	}
 	
-	private void addHandlers() {
-		btnDeskTextFormat.addActionListener( (e)->{ 
-			DeskTextFormat sif = new DeskTextFormat();
-			dpMain.add( sif );
-			sif.init();
-			showFrame(sif, true);			
-		} );
-		btnDeskSdfUrl.addActionListener( (e)->{ 
-			DeskSdfUrl sif = new DeskSdfUrl();
-			dpMain.add( sif );
-			sif.init();
-			showFrame(sif, true);			
-		} );
-		btnDeskGet.addActionListener( (e)->{
-			DeskGet sif = new DeskGet();
-			dpMain.add( sif );
-			sif.init();
-			showFrame(sif, true);
-		} );
-		btnProjectsTouch.addActionListener( (e)->{
-			ProjectsTouch sif = new ProjectsTouch();
-			dpMain.add( sif );
-			sif.init();
-			showFrame(sif, true);
-		} );
-		btnFormatJson.addActionListener( (e)->{
-			JsonFormat sif = new JsonFormat();
-			dpMain.add( sif );
-			sif.init();
-			showFrame(sif, true);
-		} );
-		btnFolderUI.addActionListener( (e)->{
-			FolderUI sif = new FolderUI();
-			dpMain.add( sif );
-			sif.init();
-			showFrame(sif, true);
-		} );
-		btnCompressUI.addActionListener( (e)->{
-			CompressUI sif = new CompressUI();
-			dpMain.add( sif );
-			sif.init();
-			showFrame(sif, true);
-		} );
-		btnBackupzUI.addActionListener( (e)->{
-			BackupzUI sif = new BackupzUI();
-			dpMain.add( sif );
-			sif.init();
-			showFrame(sif, true);
-		} );
-		btnDBDiffUI.addActionListener( (e)->{
-			DBDiffUI sif = new DBDiffUI();
-			dpMain.add( sif );
-			sif.init();
-			showFrame(sif, true);
-		} );
-	}
-	private void showFrame(JInternalFrame jif, boolean maximize) {
-		position(jif);
-		if(maximize) {
-			try {
-				jif.setMaximum(true);
-			} catch (PropertyVetoException e1) {
-				e1.printStackTrace();
+	private void loadDefinitions() {
+		coreConfig = localStateService.loadConfig("core", new ScriptzCoreConfig(), ScriptzCoreConfig.class);
+		Set<String> scriptClasses = coreConfig.scriptStatus.keySet();
+		for(String scriptClass: scriptClasses) {
+			boolean stateEnabled = coreConfig.getScriptStatus().get(scriptClass);
+			if(stateEnabled) {
+				ScriptAppResourceDefinition appDefinition = null;
+				Class<?> c;
+				try {
+					c = Class.forName(scriptClass);
+					Constructor<?> cons = c.getConstructor();
+					Object object = cons.newInstance();
+					appDefinition = (ScriptAppResourceDefinition) object;
+					appDefinition.setAppContext( new ScriptAppContextImpl(dpMain, localStateService, appDefinition) );
+					loadedDefinitions.put(scriptClass, appDefinition);
+				} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+					throw new RuntimeException(e);
+				}
+
 			}
 		}
-		jif.setVisible(true);		
 	}
-	private void position(JInternalFrame jif) {
-		int cnt = (dpMain.getComponentCount()-1) % 10 + 1; //-1 because this component has been already added, plus one after the modulo
-		jif.setLocation( cnt*50 , cnt*50 );
+	
+	private void loadToolBar(Set<String> loadedClasses) {
+		for(String loadedClass:loadedClasses) {
+			ScriptAppResourceDefinition appDefn = loadedDefinitions.get(loadedClass);
+			List<JButton> appToolButtons = appDefn.getToolButtons();
+			for(JButton appBtn:appToolButtons) {
+				//The button should be ready, with handler added by the App itself.
+				mbMain.add( appBtn ); 
+			}
+		}
 	}
+
 }

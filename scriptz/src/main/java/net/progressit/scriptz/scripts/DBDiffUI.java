@@ -3,7 +3,6 @@ package net.progressit.scriptz.scripts;
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -19,10 +18,11 @@ import com.google.common.eventbus.Subscribe;
 
 import net.miginfocom.swing.MigLayout;
 import net.progressit.backupzui.ui.LimitLinesDocumentListener;
+import net.progressit.scriptz.core.ScriptInternalFrame;
 import net.progressit.scriptz.dbdiff.DBDiffBO;
 import net.progressit.scriptz.dbdiff.DBDiffBO.DbDiffLogEvent;
 
-public class DBDiffUI  extends JInternalFrame implements ScriptInternalFrame{
+public class DBDiffUI  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;
 
 	public DBDiffUI() {
