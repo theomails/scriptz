@@ -1,4 +1,4 @@
-package net.progressit.scriptz.scripts;
+package net.progressit.scriptz.deskget;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
@@ -18,7 +18,6 @@ import com.google.common.eventbus.Subscribe;
 
 import net.miginfocom.swing.MigLayout;
 import net.progressit.scriptz.core.ScriptInternalFrame;
-import net.progressit.scriptz.deskget.DeskGetBO;
 import net.progressit.scriptz.deskget.DeskGetBO.DeskGetLogEventAsync;
 import net.progressit.scriptz.deskget.DeskGetBO.DeskPerson;
 import net.progressit.scriptz.deskget.DeskGetBO.DeskTicket;

@@ -1,4 +1,4 @@
-package net.progressit.scriptz.folderui;
+package net.progressit.scriptz.projectstouch;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +11,7 @@ import javax.swing.JMenuItem;
 import net.progressit.scriptz.core.ScriptAppContext;
 import net.progressit.scriptz.core.ScriptAppResourceDefinition;
 
-public class FolderUIDefinition implements ScriptAppResourceDefinition{
+public class ProjectsTouchDefinition implements ScriptAppResourceDefinition{
 
 	private ScriptAppContext context = null;
 	
@@ -22,7 +22,7 @@ public class FolderUIDefinition implements ScriptAppResourceDefinition{
 
 	@Override
 	public String getName() {
-		return "Folder UI";
+		return "Projects Touch";
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class FolderUIDefinition implements ScriptAppResourceDefinition{
 		
 		JButton btnFolderUI = new JButton( getName() );
 		btnFolderUI.addActionListener( (e)->{
-			FolderUI sif = new FolderUI();
+			ProjectsTouch sif = new ProjectsTouch();
 			context.loadFrame(sif);
 		} );
 		

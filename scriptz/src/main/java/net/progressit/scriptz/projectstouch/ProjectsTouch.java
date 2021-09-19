@@ -1,4 +1,4 @@
-package net.progressit.scriptz.scripts;
+package net.progressit.scriptz.projectstouch;
 
 import java.awt.BorderLayout;
 
@@ -13,7 +13,6 @@ import com.google.common.eventbus.Subscribe;
 
 import net.miginfocom.swing.MigLayout;
 import net.progressit.scriptz.core.ScriptInternalFrame;
-import net.progressit.scriptz.projectstouch.ProjectTouchRunnable;
 import net.progressit.scriptz.projectstouch.ProjectTouchRunnable.PTProjectIdentifiedAsyncEvent;
 import net.progressit.scriptz.projectstouch.ProjectTouchRunnable.PTProjectTouchAsyncEvent;
 import net.progressit.scriptz.projectstouch.ProjectTouchRunnable.ProjectIdentifyEventCode;

@@ -1,4 +1,4 @@
-package net.progressit.scriptz.scripts;
+package net.progressit.scriptz.desktextformat;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
@@ -19,7 +19,6 @@ import com.google.common.eventbus.EventBus;
 
 import net.miginfocom.swing.MigLayout;
 import net.progressit.scriptz.core.ScriptInternalFrame;
-import net.progressit.scriptz.desktextformat.DeskSdfUrlBO;
 
 public class DeskSdfUrl  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;

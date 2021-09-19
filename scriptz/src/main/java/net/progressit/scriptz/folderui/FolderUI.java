@@ -1,4 +1,4 @@
-package net.progressit.scriptz.scripts;
+package net.progressit.scriptz.folderui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -20,8 +20,6 @@ import com.google.common.eventbus.EventBus;
 
 import net.miginfocom.swing.MigLayout;
 import net.progressit.scriptz.core.ScriptInternalFrame;
-import net.progressit.scriptz.folderui.DrawPanel;
-import net.progressit.scriptz.folderui.Scanner;
 import net.progressit.scriptz.folderui.Scanner.FolderDetails;
 
 public class FolderUI  extends  ScriptInternalFrame{

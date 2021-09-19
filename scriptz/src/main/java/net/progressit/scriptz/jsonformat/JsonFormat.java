@@ -1,4 +1,4 @@
-package net.progressit.scriptz.scripts;
+package net.progressit.scriptz.jsonformat;
 
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
@@ -21,7 +21,6 @@ import com.google.common.eventbus.EventBus;
 
 import net.miginfocom.swing.MigLayout;
 import net.progressit.scriptz.core.ScriptInternalFrame;
-import net.progressit.scriptz.jsonformat.JsonOrderedFormatBO;
 
 public class JsonFormat  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;

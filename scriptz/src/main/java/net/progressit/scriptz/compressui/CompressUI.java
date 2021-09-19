@@ -1,4 +1,4 @@
-package net.progressit.scriptz.scripts;
+package net.progressit.scriptz.compressui;
 
 import java.awt.BorderLayout;
 import java.io.File;
@@ -23,7 +23,6 @@ import com.google.common.eventbus.Subscribe;
 
 import net.miginfocom.swing.MigLayout;
 import net.progressit.backupzui.ui.LimitLinesDocumentListener;
-import net.progressit.scriptz.compressui.CompressBO;
 import net.progressit.scriptz.compressui.CompressBO.CompressLogEvent;
 import net.progressit.scriptz.compressui.CompressBO.CompressionPlan;
 import net.progressit.scriptz.core.ScriptInternalFrame;
