@@ -2,7 +2,7 @@ package net.progressit.scriptz.folderui;
 
 import java.awt.BorderLayout;
 
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 
 import net.progressit.folderzui.ui.VisualizeFolderApp;
 import net.progressit.progressive.PComponent;
@@ -25,7 +25,7 @@ public class FolderUI  extends  ScriptInternalFrame{
 		PComponent.place(app, new PEventListener() {}, home);
 		
 		setSize(800, 600);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 		setTitle("Visualize Folder");
 	}
 }
