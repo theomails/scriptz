@@ -44,6 +44,16 @@
 		<!-- My Projects -->
 		<dependency>
 			<groupId>net.progressit</groupId>
+			<artifactId>progressive</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.progressit</groupId>
+			<artifactId>folderzui</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.progressit</groupId>
 			<artifactId>backupzui</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
@@ -94,13 +104,6 @@
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout-swing</artifactId>
 			<version>5.2</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.fifesoft/rsyntaxtextarea -->
-		<dependency>
-			<groupId>com.fifesoft</groupId>
-			<artifactId>rsyntaxtextarea</artifactId>
-			<version>3.0.2</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
