@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import net.progressit.scriptz.core.ScriptAppContext;
 import net.progressit.scriptz.core.ScriptAppResourceDefinition;
 import net.progressit.scriptz.core.ScriptInternalFrame;
-import net.progressit.scriptz.core.ScriptLocalStateService;
+import net.progressit.scriptz.core.state.ScriptLocalStateService;
 
 @RequiredArgsConstructor
 public class ScriptAppContextImpl implements ScriptAppContext {

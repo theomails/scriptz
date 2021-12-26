@@ -3,6 +3,7 @@ package net.progressit.scriptz.backupzui;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JMenu;
@@ -26,7 +27,7 @@ public class BackupzUIDefinition implements ScriptAppResourceDefinition{
 	}
 
 	@Override
-	public Map<ScriptStandardMenus, JMenuItem> getStandardMenuItems() {
+	public Map<ScriptStandardMenu, JMenuItem> getStandardMenuItems() {
 		return new HashMap<>();
 	}
 
@@ -47,4 +48,33 @@ public class BackupzUIDefinition implements ScriptAppResourceDefinition{
 		return List.of(btnFolderUI);
 	}
 
+	@Override
+	public boolean hasConfigSupport() {
+		return false;
+	}
+
+	@Override
+	public <T> Class<T> getConfigClass() {
+		return null;
+	}
+
+	@Override
+	public void handleConfigMigration(Optional<Integer> savedVersion) {
+		
+	}
+
+	@Override
+	public boolean hasStateSupport() {
+		return false;
+	}
+
+	@Override
+	public <T> Class<T> getStateClass() {
+		return null;
+	}
+
+	@Override
+	public void handleStateMigration(Optional<Integer> savedVersion) {
+		
+	}
 }

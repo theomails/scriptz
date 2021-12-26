@@ -1,4 +1,4 @@
-package net.progressit.scriptz.core;
+package net.progressit.scriptz.core.state;
 
 import java.io.File;
 import java.io.FileReader;
@@ -27,12 +27,12 @@ public class ScriptLocalStateService {
 	@Inject
 	public ScriptLocalStateService() {}
 	
-	public enum ScriptLocalStateType {state, config}
+	public enum ScriptLocalStateType {userState, config}
 	public void storeState(String script, Object state) {
-		store(script, state, ScriptLocalStateType.state);
+		store(script, state, ScriptLocalStateType.userState);
 	}
 	public <T> T loadState(String script, T stateDefaults, Class<T> classOfState) {
-		return load(script, stateDefaults, classOfState, ScriptLocalStateType.state);
+		return load(script, stateDefaults, classOfState, ScriptLocalStateType.userState);
 	}
 	public void storeConfig(String script, Object config) {
 		store(script, config, ScriptLocalStateType.config);
@@ -62,22 +62,28 @@ public class ScriptLocalStateService {
 			File userHomeScritpzFolder = ensureAndGetScriptzFolder();
 			String fileName = getFileName(script, type);
 			File stateFile = new File(userHomeScritpzFolder, fileName);
+			T loadedData = null;
 			if(stateFile.exists()) {
 				Gson g = new Gson();
 				try(FileReader fr = new FileReader(stateFile)){
-					T loadedState = g.fromJson(fr, classOfContent);
-					return loadedState;
+					loadedData = g.fromJson(fr, classOfContent);
 				}
 			}else {
 				//Save the defaults as the data
 				store(script, defaults, type);
-				return defaults;
+				loadedData = defaults;
 			}
+			migrateIfNeeded(loadedData);
+			return loadedData;
 		} catch (IOException e) {
 			throw new ScriptLocalStateServiceException("Exception while loading " + type + " for " + script, e);
 		}
 	}
 	
+	private <T> void migrateIfNeeded(T loadedData) {
+		// TODO Auto-generated method stub
+		
+	}
 	private File ensureAndGetScriptzFolder() throws IOException {
 		String userHome = System.getProperty("user.home");
 		File userHomeScritpzFolder = new File(userHome, ".scriptz");

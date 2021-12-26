@@ -1,6 +1,8 @@
 package net.progressit.scriptz;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashMap;
@@ -11,13 +13,15 @@ import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 
 import com.google.inject.Inject;
 
 import lombok.Data;
 import net.progressit.scriptz.core.ScriptAppResourceDefinition;
-import net.progressit.scriptz.core.ScriptLocalStateService;
+import net.progressit.scriptz.core.state.ScriptLocalStateService;
 
 public class ScriptzUI extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -25,6 +29,13 @@ public class ScriptzUI extends JFrame{
 	@Data
 	public static class ScriptzCoreConfig{
 		private Map<String, Boolean> scriptStatus = new LinkedHashMap<>();
+		private Map<String, ScriptDetails> scriptDetails = new LinkedHashMap<>();
+	}
+	@Data
+	public static class ScriptDetails{
+		private Integer version = 1;
+		private boolean enabled = true;
+		private boolean showInBar = true;
 	}
 
 	private ScriptzCoreConfig coreConfig;
@@ -35,13 +46,24 @@ public class ScriptzUI extends JFrame{
 		this.localStateService = localStateService;
 	}
 	
+	private JPanel pnlWrapper = new JPanel(new BorderLayout());
 	private JDesktopPane dpMain = new JDesktopPane();
-	private JMenuBar mbMain = new JMenuBar();
+	private JPanel toolbar = new JPanel(new FlowLayout(FlowLayout.LEADING, 10, 2));
+	private JMenuBar menubar = new JMenuBar();
+	private JMenu mnuFile = new JMenu();
+	private JMenu mnuScripts = new JMenu();
 
 	public void init() {
-		setJMenuBar(mbMain);
-		setContentPane(dpMain);
+		setJMenuBar(menubar);
+		setContentPane(pnlWrapper);
 		
+		menubar.add(mnuFile);
+		menubar.add(mnuScripts);
+		
+		pnlWrapper.add(toolbar, BorderLayout.NORTH);
+		pnlWrapper.add(dpMain, BorderLayout.CENTER);
+		
+		toolbar.setAlignmentX(LEFT_ALIGNMENT);
 		loadDefinitions();
 		Set<String> loadedClasses = loadedDefinitions.keySet();
 		loadToolBar(loadedClasses);
@@ -78,7 +100,7 @@ public class ScriptzUI extends JFrame{
 			List<JButton> appToolButtons = appDefn.getToolButtons();
 			for(JButton appBtn:appToolButtons) {
 				//The button should be ready, with handler added by the App itself.
-				mbMain.add( appBtn ); 
+				toolbar.add( appBtn ); 
 			}
 		}
 	}
