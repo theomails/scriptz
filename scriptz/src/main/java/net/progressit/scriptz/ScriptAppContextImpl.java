@@ -7,16 +7,16 @@ import javax.swing.JInternalFrame;
 
 import lombok.RequiredArgsConstructor;
 import net.progressit.scriptz.core.ScriptAppContext;
-import net.progressit.scriptz.core.ScriptAppResourceDefinition;
+import net.progressit.scriptz.core.ScriptAppDefinition;
 import net.progressit.scriptz.core.ScriptInternalFrame;
 import net.progressit.scriptz.core.state.ScriptLocalStateService;
 
 @RequiredArgsConstructor
-public class ScriptAppContextImpl implements ScriptAppContext {
+public class ScriptAppContextImpl<T,V> implements ScriptAppContext {
 	
 	private final JDesktopPane dpMain;
 	private final ScriptLocalStateService localStateService;
-	private final ScriptAppResourceDefinition appDefn;
+	private final ScriptAppDefinition<T,V> appDefn;
 	@Override
 	public void storeState(Object config) {
 		localStateService.storeState(appDefn.getName(), config);
@@ -31,9 +31,10 @@ public class ScriptAppContextImpl implements ScriptAppContext {
 		System.out.println(message);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T loadState(T stateDefaults, Class<T> classOfState) {
-		return localStateService.loadState(appDefn.getName(), stateDefaults, classOfState);
+	public T loadState() {
+		return localStateService.loadState(appDefn);
 	}
 	
 	@Override
@@ -43,9 +44,10 @@ public class ScriptAppContextImpl implements ScriptAppContext {
 		showFrame(sif, true);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public <T> T loadConfig(T stateDefaults, Class<T> classOfState) {
-		return localStateService.loadConfig(appDefn.getName(), stateDefaults, classOfState);
+	public V loadConfig() {
+		return localStateService.loadConfig(appDefn);
 	}
 	
 	@Override

@@ -1,0 +1,59 @@
+package net.progressit.scriptz.core;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+
+public abstract class AbstractScriptAppDefinition<T,V> implements ScriptAppDefinition<T,V>{
+
+	@Override
+	public Map<ScriptStandardMenu, JMenuItem> getStandardMenuItems() {
+		return new HashMap<>();
+	}
+
+	@Override
+	public JMenu getMenu() {
+		return null;
+	}
+
+	@Override
+	public List<JButton> getToolButtons() {
+		return new ArrayList<>();
+	}
+
+	@Override
+	public Class<T> getConfigClass() {
+		return null;
+	}
+
+	@Override
+	public T upgradeConfigVersionToNext(T currentData) {
+		return currentData;
+	}
+
+	@Override
+	public T getConfigDefaults() {
+		return null;
+	}
+
+	@Override
+	public Class<V> getStateClass() {
+		return null;
+	}
+
+	@Override
+	public V upgradeStateVersionToNext(V currentData) {
+		return currentData;
+	}
+
+	@Override
+	public V getStateDefaults() {
+		return null;
+	}
+
+}

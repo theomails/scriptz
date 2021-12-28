@@ -2,13 +2,12 @@ package net.progressit.scriptz.core;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-public interface ScriptAppResourceDefinition {
+public interface ScriptAppDefinition<T,V> {
 	
 	public enum ScriptStandardMenu{ FILE, SCRIPTS }
 	
@@ -28,15 +27,15 @@ public interface ScriptAppResourceDefinition {
 	
 	//STATE and CONFIG
 	
-	public boolean hasConfigSupport();
+	public Class<T> getConfigClass();
 	
-	public <T> Class<T> getConfigClass();
+	public T upgradeConfigVersionToNext(T currentData);
 	
-	public void handleConfigMigration(Optional<Integer> savedVersion);
+	public T getConfigDefaults();
 	
-	public boolean hasStateSupport();
+	public Class<V> getStateClass();
 	
-	public <T> Class<T> getStateClass();
+	public V upgradeStateVersionToNext(V currentData);
 	
-	public void handleStateMigration(Optional<Integer> savedVersion);
+	public V getStateDefaults();
 }

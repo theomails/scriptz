@@ -3,16 +3,15 @@ package net.progressit.scriptz.compressui;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import net.progressit.scriptz.core.AbstractScriptAppDefinition;
 import net.progressit.scriptz.core.ScriptAppContext;
-import net.progressit.scriptz.core.ScriptAppResourceDefinition;
 
-public class CompressUIDefinition implements ScriptAppResourceDefinition{
+public class CompressUIDefinition extends AbstractScriptAppDefinition<Object, Object> {
 
 	private ScriptAppContext context = null;
 	
@@ -48,33 +47,4 @@ public class CompressUIDefinition implements ScriptAppResourceDefinition{
 		return List.of(btnFolderUI);
 	}
 
-	@Override
-	public boolean hasConfigSupport() {
-		return false;
-	}
-
-	@Override
-	public <T> Class<T> getConfigClass() {
-		return null;
-	}
-
-	@Override
-	public void handleConfigMigration(Optional<Integer> savedVersion) {
-		
-	}
-
-	@Override
-	public boolean hasStateSupport() {
-		return false;
-	}
-
-	@Override
-	public <T> Class<T> getStateClass() {
-		return null;
-	}
-
-	@Override
-	public void handleStateMigration(Optional<Integer> savedVersion) {
-		
-	}
 }

@@ -3,8 +3,6 @@ package net.progressit.scriptz;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,31 +17,33 @@ import javax.swing.JPanel;
 
 import com.google.inject.Inject;
 
+import lombok.Builder;
 import lombok.Data;
-import net.progressit.scriptz.core.ScriptAppResourceDefinition;
-import net.progressit.scriptz.core.state.ScriptLocalStateService;
+import net.progressit.scriptz.core.ScriptAppDefinition;
 
 public class ScriptzUI extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	@Data
 	public static class ScriptzCoreConfig{
+		private Integer version = 1;
 		private Map<String, Boolean> scriptStatus = new LinkedHashMap<>();
 		private Map<String, ScriptDetails> scriptDetails = new LinkedHashMap<>();
 	}
 	@Data
+	@Builder
 	public static class ScriptDetails{
-		private Integer version = 1;
+		@Builder.Default
 		private boolean enabled = true;
+		@Builder.Default
 		private boolean showInBar = true;
 	}
+	
+	private final ScriptzService scriptzService;
 
-	private ScriptzCoreConfig coreConfig;
-	private final Map<String, ScriptAppResourceDefinition> loadedDefinitions = new LinkedHashMap<>(); 
-	private ScriptLocalStateService localStateService;
 	@Inject
-	public ScriptzUI(ScriptLocalStateService localStateService) {
-		this.localStateService = localStateService;
+	public ScriptzUI(ScriptzService scriptzService) {
+		this.scriptzService = scriptzService;
 	}
 	
 	private JPanel pnlWrapper = new JPanel(new BorderLayout());
@@ -64,39 +64,17 @@ public class ScriptzUI extends JFrame{
 		pnlWrapper.add(dpMain, BorderLayout.CENTER);
 		
 		toolbar.setAlignmentX(LEFT_ALIGNMENT);
-		loadDefinitions();
-		Set<String> loadedClasses = loadedDefinitions.keySet();
-		loadToolBar(loadedClasses);
+		loadToolbar();
 		
 		dpMain.setBackground(Color.gray);
 	}
-	
-	private void loadDefinitions() {
-		coreConfig = localStateService.loadConfig("core", new ScriptzCoreConfig(), ScriptzCoreConfig.class);
-		Set<String> scriptClasses = coreConfig.scriptStatus.keySet();
-		for(String scriptClass: scriptClasses) {
-			boolean stateEnabled = coreConfig.getScriptStatus().get(scriptClass);
-			if(stateEnabled) {
-				ScriptAppResourceDefinition appDefinition = null;
-				Class<?> c;
-				try {
-					c = Class.forName(scriptClass);
-					Constructor<?> cons = c.getConstructor();
-					Object object = cons.newInstance();
-					appDefinition = (ScriptAppResourceDefinition) object;
-					appDefinition.setAppContext( new ScriptAppContextImpl(dpMain, localStateService, appDefinition) );
-					loadedDefinitions.put(scriptClass, appDefinition);
-				} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					throw new RuntimeException(e);
-				}
 
-			}
-		}
-	}
 	
-	private void loadToolBar(Set<String> loadedClasses) {
-		for(String loadedClass:loadedClasses) {
-			ScriptAppResourceDefinition appDefn = loadedDefinitions.get(loadedClass);
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void loadToolbar() {
+		Set<String> loadedClassNames = scriptzService.getScriptNames();
+		for(String loadedClassName:loadedClassNames) {
+			ScriptAppDefinition appDefn = scriptzService.getDefinition(loadedClassName);
 			List<JButton> appToolButtons = appDefn.getToolButtons();
 			for(JButton appBtn:appToolButtons) {
 				//The button should be ready, with handler added by the App itself.

@@ -3,14 +3,13 @@ package net.progressit.scriptz.backupzui;
 import java.awt.BorderLayout;
 import java.beans.PropertyVetoException;
 
+import javax.inject.Inject;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.google.common.eventbus.EventBus;
-import com.google.inject.Injector;
 
 import net.miginfocom.swing.MigLayout;
-import net.progressit.backupzui.Main;
 import net.progressit.backupzui.logic.BackupService;
 import net.progressit.backupzui.ui.RunBackupPanel;
 import net.progressit.scriptz.core.ScriptInternalFrame;
@@ -19,14 +18,11 @@ public class BackupzUI  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;
 
 	//Interal bus for this script.
-	private final EventBus bus;
-	private final BackupService backupService;
-	public BackupzUI() {
+	private final EventBus bus = new EventBus();
+	
+	@Inject
+	public BackupzUI(BackupService backupService) {
 		super("Backupz UI", true, true, true, true);
-		
-		Injector injector = Main.getBackupzInjector();
-		backupService = injector.getInstance(BackupService.class);
-		bus = injector.getInstance(EventBus.class);
 		
 		this.runPanel = new RunBackupPanel(backupService, bus);
 	}

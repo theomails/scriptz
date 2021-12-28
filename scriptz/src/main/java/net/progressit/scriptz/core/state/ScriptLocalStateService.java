@@ -12,6 +12,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
+import net.progressit.scriptz.core.ScriptAppDefinition;
+
 public class ScriptLocalStateService {
 	
 	public static class ScriptLocalStateServiceException extends RuntimeException{
@@ -24,21 +26,27 @@ public class ScriptLocalStateService {
 		}
 	}
 	
+	private final ScriptLocalStateMigrationService migrationService;
+	
 	@Inject
-	public ScriptLocalStateService() {}
+	public ScriptLocalStateService(ScriptLocalStateMigrationService migrationService) {
+		this.migrationService = migrationService;
+	}
 	
 	public enum ScriptLocalStateType {userState, config}
 	public void storeState(String script, Object state) {
 		store(script, state, ScriptLocalStateType.userState);
 	}
-	public <T> T loadState(String script, T stateDefaults, Class<T> classOfState) {
-		return load(script, stateDefaults, classOfState, ScriptLocalStateType.userState);
+	@SuppressWarnings("unchecked")
+	public <T,V> T loadState(ScriptAppDefinition<T,V> appDefinition) {
+		return (T) load(appDefinition, ScriptLocalStateType.userState);
 	}
 	public void storeConfig(String script, Object config) {
 		store(script, config, ScriptLocalStateType.config);
 	}
-	public <T> T loadConfig(String script, T configDefaults, Class<T> classOfConfig) {
-		return load(script, configDefaults, classOfConfig, ScriptLocalStateType.config);
+	@SuppressWarnings("unchecked")
+	public <T,V> V loadConfig(ScriptAppDefinition<T,V> appDefinition) {
+		return (V) load(appDefinition, ScriptLocalStateType.config);
 	}
 	
 	//PRIVATE
@@ -57,33 +65,42 @@ public class ScriptLocalStateService {
 		}	
 	}
 	
-	private <T> T load(String script, T defaults, Class<T> classOfContent, ScriptLocalStateType type) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private Object load(ScriptAppDefinition appDefinition, ScriptLocalStateType type) {
 		try {
 			File userHomeScritpzFolder = ensureAndGetScriptzFolder();
-			String fileName = getFileName(script, type);
-			File stateFile = new File(userHomeScritpzFolder, fileName);
-			T loadedData = null;
-			if(stateFile.exists()) {
+			String fileName = getFileName(appDefinition.getName(), type);
+			File file = new File(userHomeScritpzFolder, fileName);
+			Object loadedData = null;
+			if(file.exists()) {
 				Gson g = new Gson();
-				try(FileReader fr = new FileReader(stateFile)){
-					loadedData = g.fromJson(fr, classOfContent);
+				try(FileReader fr = new FileReader(file)){
+					Class dataClass = getClassForType(type, appDefinition);
+					loadedData = g.fromJson(fr, dataClass);
+					migrationService.migrateIfNeeded(loadedData, type, appDefinition);
 				}
-			}else {
+			} else {
 				//Save the defaults as the data
-				store(script, defaults, type);
-				loadedData = defaults;
+				Object dataDefaults = getDefaultsForType(type, appDefinition);
+				store(appDefinition.getName(), dataDefaults, type);
+				loadedData = dataDefaults;
 			}
-			migrateIfNeeded(loadedData);
 			return loadedData;
 		} catch (IOException e) {
-			throw new ScriptLocalStateServiceException("Exception while loading " + type + " for " + script, e);
+			throw new ScriptLocalStateServiceException("Exception while loading " + type + " for " + appDefinition.getName(), e);
 		}
 	}
 	
-	private <T> void migrateIfNeeded(T loadedData) {
-		// TODO Auto-generated method stub
-		
+	@SuppressWarnings("rawtypes")
+	private Object getDefaultsForType(ScriptLocalStateType type, ScriptAppDefinition appDefinition) {
+		return type==ScriptLocalStateType.config?appDefinition.getConfigDefaults():appDefinition.getStateDefaults();
 	}
+	
+	@SuppressWarnings("rawtypes")
+	private Class getClassForType(ScriptLocalStateType type, ScriptAppDefinition appDefinition) {
+		return type==ScriptLocalStateType.config?appDefinition.getConfigClass():appDefinition.getStateClass();
+	}
+	
 	private File ensureAndGetScriptzFolder() throws IOException {
 		String userHome = System.getProperty("user.home");
 		File userHomeScritpzFolder = new File(userHome, ".scriptz");

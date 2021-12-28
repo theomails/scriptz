@@ -7,11 +7,11 @@ public interface ScriptAppContext {
 
 	public JDesktopPane getContainer();
 
-	public <T> T loadState(T stateDefaults, Class<T> classOfState);
+	public <T> T loadState();
 
 	public void storeState(Object config);
 	
-	public <T> T loadConfig(T stateDefaults, Class<T> classOfState);
+	public <T> T loadConfig();
 
 	public void storeConfig(Object config);
 

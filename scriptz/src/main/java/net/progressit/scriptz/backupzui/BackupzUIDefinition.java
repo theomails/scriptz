@@ -3,16 +3,19 @@ package net.progressit.scriptz.backupzui;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import net.progressit.scriptz.core.ScriptAppContext;
-import net.progressit.scriptz.core.ScriptAppResourceDefinition;
+import com.google.inject.Injector;
 
-public class BackupzUIDefinition implements ScriptAppResourceDefinition{
+import net.progressit.backupzui.Main;
+import net.progressit.backupzui.logic.BackupService;
+import net.progressit.scriptz.core.AbstractScriptAppDefinition;
+import net.progressit.scriptz.core.ScriptAppContext;
+
+public class BackupzUIDefinition extends AbstractScriptAppDefinition<Object, Object> {
 
 	private ScriptAppContext context = null;
 	
@@ -20,6 +23,9 @@ public class BackupzUIDefinition implements ScriptAppResourceDefinition{
 	public void setAppContext(ScriptAppContext context) {
 		this.context = context;
 	}
+	
+	private Injector injector = null;
+
 
 	@Override
 	public String getName() {
@@ -41,40 +47,17 @@ public class BackupzUIDefinition implements ScriptAppResourceDefinition{
 		
 		JButton btnFolderUI = new JButton( getName() );
 		btnFolderUI.addActionListener( (e)->{
-			BackupzUI sif = new BackupzUI();
+			if(injector==null) {
+				injector = Main.getBackupzInjector();
+			}
+			
+			BackupService backupService = injector.getInstance(BackupService.class);
+			BackupzUI sif = new BackupzUI(backupService);
+			
 			context.loadFrame(sif);
 		} );
 		
 		return List.of(btnFolderUI);
 	}
 
-	@Override
-	public boolean hasConfigSupport() {
-		return false;
-	}
-
-	@Override
-	public <T> Class<T> getConfigClass() {
-		return null;
-	}
-
-	@Override
-	public void handleConfigMigration(Optional<Integer> savedVersion) {
-		
-	}
-
-	@Override
-	public boolean hasStateSupport() {
-		return false;
-	}
-
-	@Override
-	public <T> Class<T> getStateClass() {
-		return null;
-	}
-
-	@Override
-	public void handleStateMigration(Optional<Integer> savedVersion) {
-		
-	}
 }
