@@ -11,7 +11,7 @@ import javax.swing.JDesktopPane;
 
 import net.progressit.scriptz.ScriptzUI;
 import net.progressit.scriptz.ScriptzUI.ScriptzCoreConfig;
-import net.progressit.scriptz.coreapp.ScriptCoreAppDefinition;
+import net.progressit.scriptz.core.app.ScriptCoreAppDefinition;
 
 /**
  * Provides access to all scriptz definitons.

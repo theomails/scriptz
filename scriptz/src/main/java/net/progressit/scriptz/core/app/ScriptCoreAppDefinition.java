@@ -1,4 +1,4 @@
-package net.progressit.scriptz.coreapp;
+package net.progressit.scriptz.core.app;
 
 import java.util.HashMap;
 import java.util.Map;
