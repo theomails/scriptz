@@ -41,7 +41,7 @@ public class DeskGetDefinition extends AbstractScriptAppDefinition<Object, Objec
 		JButton btnFolderUI = new JButton( getName() );
 		btnFolderUI.addActionListener( (e)->{
 			DeskGet sif = new DeskGet();
-			context.loadFrame(sif);
+			context.displayAndInitFrame(sif);
 		} );
 		
 		return List.of(btnFolderUI);

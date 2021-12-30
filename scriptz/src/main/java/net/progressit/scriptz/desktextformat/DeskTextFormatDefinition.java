@@ -41,7 +41,7 @@ public class DeskTextFormatDefinition extends AbstractScriptAppDefinition<Object
 		JButton btnFolderUI = new JButton( getName() );
 		btnFolderUI.addActionListener( (e)->{
 			DeskTextFormat sif = new DeskTextFormat();
-			context.loadFrame(sif);
+			context.displayAndInitFrame(sif);
 		} );
 		
 		return List.of(btnFolderUI);

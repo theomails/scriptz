@@ -41,7 +41,7 @@ public class ProjectsTouchDefinition extends AbstractScriptAppDefinition<Object,
 		JButton btnFolderUI = new JButton( getName() );
 		btnFolderUI.addActionListener( (e)->{
 			ProjectsTouch sif = new ProjectsTouch();
-			context.loadFrame(sif);
+			context.displayAndInitFrame(sif);
 		} );
 		
 		return List.of(btnFolderUI);

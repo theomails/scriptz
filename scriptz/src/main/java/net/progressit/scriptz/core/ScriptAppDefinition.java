@@ -27,12 +27,20 @@ public interface ScriptAppDefinition<T,V> {
 	
 	//STATE and CONFIG
 	
+	/**
+	 * Return null to indicate that the Config data is not applicable for this script.
+	 * @return
+	 */
 	public Class<T> getConfigClass();
 	
 	public T upgradeConfigVersionToNext(T currentData);
 	
 	public T getConfigDefaults();
 	
+	/**
+	 * Return null to indicate that the State data is not applicable for this script.
+	 * @return
+	 */
 	public Class<V> getStateClass();
 	
 	public V upgradeStateVersionToNext(V currentData);

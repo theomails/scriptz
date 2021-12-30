@@ -41,7 +41,7 @@ public class DBDiffUIDefinition extends AbstractScriptAppDefinition<Object, Obje
 		JButton btnFolderUI = new JButton( getName() );
 		btnFolderUI.addActionListener( (e)->{
 			DBDiffUI sif = new DBDiffUI();
-			context.loadFrame(sif);
+			context.displayAndInitFrame(sif);
 		} );
 		
 		return List.of(btnFolderUI);

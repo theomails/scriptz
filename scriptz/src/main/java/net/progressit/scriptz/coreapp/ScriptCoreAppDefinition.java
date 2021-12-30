@@ -1,9 +1,10 @@
-package net.progressit.scriptz;
+package net.progressit.scriptz.coreapp;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import net.progressit.scriptz.ScriptzUI;
 import net.progressit.scriptz.ScriptzUI.ScriptDetails;
 import net.progressit.scriptz.ScriptzUI.ScriptzCoreConfig;
 import net.progressit.scriptz.core.AbstractScriptAppDefinition;

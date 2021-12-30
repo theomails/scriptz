@@ -41,7 +41,7 @@ public class JsonFormatDefinition extends AbstractScriptAppDefinition<Object, Ob
 		JButton btnFolderUI = new JButton( getName() );
 		btnFolderUI.addActionListener( (e)->{
 			JsonFormat sif = new JsonFormat();
-			context.loadFrame(sif);
+			context.displayAndInitFrame(sif);
 		} );
 		
 		return List.of(btnFolderUI);

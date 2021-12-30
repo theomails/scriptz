@@ -41,7 +41,7 @@ public class CompressUIDefinition extends AbstractScriptAppDefinition<Object, Ob
 		JButton btnFolderUI = new JButton( getName() );
 		btnFolderUI.addActionListener( (e)->{
 			CompressUI sif = new CompressUI();
-			context.loadFrame(sif);
+			context.displayAndInitFrame(sif);
 		} );
 		
 		return List.of(btnFolderUI);

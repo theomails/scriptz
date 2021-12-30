@@ -1,4 +1,4 @@
-package net.progressit.scriptz;
+package net.progressit.scriptz.framework;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -9,9 +9,11 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.swing.JDesktopPane;
 
+import net.progressit.scriptz.ScriptzUI;
 import net.progressit.scriptz.ScriptzUI.ScriptzCoreConfig;
 import net.progressit.scriptz.core.ScriptAppDefinition;
 import net.progressit.scriptz.core.state.ScriptLocalStateService;
+import net.progressit.scriptz.coreapp.ScriptCoreAppDefinition;
 
 /**
  * Provides access to all scriptz definitons.

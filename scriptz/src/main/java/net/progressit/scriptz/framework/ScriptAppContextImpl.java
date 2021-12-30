@@ -1,4 +1,4 @@
-package net.progressit.scriptz;
+package net.progressit.scriptz.framework;
 
 import java.beans.PropertyVetoException;
 
@@ -17,6 +17,7 @@ public class ScriptAppContextImpl<T,V> implements ScriptAppContext {
 	private final JDesktopPane dpMain;
 	private final ScriptLocalStateService localStateService;
 	private final ScriptAppDefinition<T,V> appDefn;
+	
 	@Override
 	public void storeState(Object config) {
 		localStateService.storeState(appDefn.getName(), config);
@@ -37,17 +38,17 @@ public class ScriptAppContextImpl<T,V> implements ScriptAppContext {
 		return localStateService.loadState(appDefn);
 	}
 	
-	@Override
-	public void loadFrame(ScriptInternalFrame sif) {
-		dpMain.add( sif );
-		sif.init();
-		showFrame(sif, true);
-	}
-	
 	@SuppressWarnings("unchecked")
 	@Override
 	public V loadConfig() {
 		return localStateService.loadConfig(appDefn);
+	}
+
+	@Override
+	public void displayAndInitFrame(ScriptInternalFrame sif) {
+		dpMain.add( sif );
+		sif.init();
+		showFrame(sif, true);
 	}
 	
 	@Override

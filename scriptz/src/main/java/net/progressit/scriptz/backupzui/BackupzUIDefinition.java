@@ -54,7 +54,7 @@ public class BackupzUIDefinition extends AbstractScriptAppDefinition<Object, Obj
 			BackupService backupService = injector.getInstance(BackupService.class);
 			BackupzUI sif = new BackupzUI(backupService);
 			
-			context.loadFrame(sif);
+			context.displayAndInitFrame(sif);
 		} );
 		
 		return List.of(btnFolderUI);

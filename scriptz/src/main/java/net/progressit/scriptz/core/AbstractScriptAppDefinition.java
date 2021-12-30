@@ -33,12 +33,12 @@ public abstract class AbstractScriptAppDefinition<T,V> implements ScriptAppDefin
 
 	@Override
 	public T upgradeConfigVersionToNext(T currentData) {
-		return currentData;
+		throw new RuntimeException("Not supported");
 	}
 
 	@Override
 	public T getConfigDefaults() {
-		return null;
+		throw new RuntimeException("Not supported");
 	}
 
 	@Override
@@ -48,12 +48,12 @@ public abstract class AbstractScriptAppDefinition<T,V> implements ScriptAppDefin
 
 	@Override
 	public V upgradeStateVersionToNext(V currentData) {
-		return currentData;
+		throw new RuntimeException("Not supported");
 	}
 
 	@Override
 	public V getStateDefaults() {
-		return null;
+		throw new RuntimeException("Not supported");
 	}
 
 }

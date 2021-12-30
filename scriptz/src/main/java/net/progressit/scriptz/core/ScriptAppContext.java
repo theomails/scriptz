@@ -3,8 +3,9 @@ package net.progressit.scriptz.core;
 import javax.swing.JDesktopPane;
 
 public interface ScriptAppContext {
-	public void loadFrame(ScriptInternalFrame frame);
+	public void displayAndInitFrame(ScriptInternalFrame frame);
 
+	@Deprecated
 	public JDesktopPane getContainer();
 
 	public <T> T loadState();

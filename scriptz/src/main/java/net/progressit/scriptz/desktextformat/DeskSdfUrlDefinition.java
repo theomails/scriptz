@@ -41,7 +41,7 @@ public class DeskSdfUrlDefinition extends AbstractScriptAppDefinition<Object, Ob
 		JButton btnFolderUI = new JButton( getName() );
 		btnFolderUI.addActionListener( (e)->{
 			DeskSdfUrl sif = new DeskSdfUrl();
-			context.loadFrame(sif);
+			context.displayAndInitFrame(sif);
 		} );
 		
 		return List.of(btnFolderUI);

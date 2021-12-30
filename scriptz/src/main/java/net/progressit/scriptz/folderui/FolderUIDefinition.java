@@ -41,7 +41,7 @@ public class FolderUIDefinition extends AbstractScriptAppDefinition<Object, Obje
 		JButton btnFolderUI = new JButton( getName() );
 		btnFolderUI.addActionListener( (e)->{
 			FolderUI sif = new FolderUI();
-			context.loadFrame(sif);
+			context.displayAndInitFrame(sif);
 		} );
 		
 		return List.of(btnFolderUI);
