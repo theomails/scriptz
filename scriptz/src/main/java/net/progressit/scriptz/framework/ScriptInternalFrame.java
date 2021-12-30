@@ -1,4 +1,4 @@
-package net.progressit.scriptz.core;
+package net.progressit.scriptz.framework;
 
 import javax.swing.JInternalFrame;
 

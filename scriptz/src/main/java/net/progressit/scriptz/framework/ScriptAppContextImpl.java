@@ -6,10 +6,6 @@ import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 
 import lombok.RequiredArgsConstructor;
-import net.progressit.scriptz.core.ScriptAppContext;
-import net.progressit.scriptz.core.ScriptAppDefinition;
-import net.progressit.scriptz.core.ScriptInternalFrame;
-import net.progressit.scriptz.core.state.ScriptLocalStateService;
 
 @RequiredArgsConstructor
 public class ScriptAppContextImpl<T,V> implements ScriptAppContext {

@@ -20,7 +20,7 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 import com.google.common.eventbus.EventBus;
 
 import net.miginfocom.swing.MigLayout;
-import net.progressit.scriptz.core.ScriptInternalFrame;
+import net.progressit.scriptz.framework.ScriptInternalFrame;
 
 public class JsonFormat  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;

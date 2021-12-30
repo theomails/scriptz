@@ -8,8 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import net.progressit.scriptz.core.AbstractScriptAppDefinition;
-import net.progressit.scriptz.core.ScriptAppContext;
+import net.progressit.scriptz.framework.AbstractScriptAppDefinition;
+import net.progressit.scriptz.framework.ScriptAppContext;
 
 public class DBDiffUIDefinition extends AbstractScriptAppDefinition<Object, Object> {
 

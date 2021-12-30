@@ -1,4 +1,4 @@
-package net.progressit.scriptz.core.state;
+package net.progressit.scriptz.framework;
 
 import org.apache.commons.jxpath.JXPathContext;
 

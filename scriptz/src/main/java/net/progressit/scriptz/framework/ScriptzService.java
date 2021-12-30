@@ -11,8 +11,6 @@ import javax.swing.JDesktopPane;
 
 import net.progressit.scriptz.ScriptzUI;
 import net.progressit.scriptz.ScriptzUI.ScriptzCoreConfig;
-import net.progressit.scriptz.core.ScriptAppDefinition;
-import net.progressit.scriptz.core.state.ScriptLocalStateService;
 import net.progressit.scriptz.coreapp.ScriptCoreAppDefinition;
 
 /**

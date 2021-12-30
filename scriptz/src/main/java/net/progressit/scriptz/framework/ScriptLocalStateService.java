@@ -1,4 +1,4 @@
-package net.progressit.scriptz.core.state;
+package net.progressit.scriptz.framework;
 
 import java.io.File;
 import java.io.FileReader;
@@ -11,8 +11,6 @@ import java.nio.file.Path;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
-
-import net.progressit.scriptz.core.ScriptAppDefinition;
 
 public class ScriptLocalStateService {
 	

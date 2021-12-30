@@ -7,8 +7,8 @@ import java.util.Set;
 import net.progressit.scriptz.ScriptzUI;
 import net.progressit.scriptz.ScriptzUI.ScriptDetails;
 import net.progressit.scriptz.ScriptzUI.ScriptzCoreConfig;
-import net.progressit.scriptz.core.AbstractScriptAppDefinition;
-import net.progressit.scriptz.core.ScriptAppContext;
+import net.progressit.scriptz.framework.AbstractScriptAppDefinition;
+import net.progressit.scriptz.framework.ScriptAppContext;
 
 public class ScriptCoreAppDefinition extends AbstractScriptAppDefinition<ScriptzCoreConfig, Object> {
 	@Override

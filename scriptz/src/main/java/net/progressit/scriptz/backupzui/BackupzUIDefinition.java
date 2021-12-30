@@ -12,8 +12,8 @@ import com.google.inject.Injector;
 
 import net.progressit.backupzui.Main;
 import net.progressit.backupzui.logic.BackupService;
-import net.progressit.scriptz.core.AbstractScriptAppDefinition;
-import net.progressit.scriptz.core.ScriptAppContext;
+import net.progressit.scriptz.framework.AbstractScriptAppDefinition;
+import net.progressit.scriptz.framework.ScriptAppContext;
 
 public class BackupzUIDefinition extends AbstractScriptAppDefinition<Object, Object> {
 

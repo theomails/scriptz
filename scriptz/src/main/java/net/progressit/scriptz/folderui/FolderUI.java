@@ -8,7 +8,7 @@ import net.progressit.folderzui.ui.VisualizeFolderApp;
 import net.progressit.progressive.PComponent;
 import net.progressit.progressive.PComponent.PEventListener;
 import net.progressit.progressive.PComponent.PPlacers;
-import net.progressit.scriptz.core.ScriptInternalFrame;
+import net.progressit.scriptz.framework.ScriptInternalFrame;
 
 public class FolderUI  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;

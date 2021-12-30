@@ -19,7 +19,7 @@ import com.google.inject.Inject;
 
 import lombok.Builder;
 import lombok.Data;
-import net.progressit.scriptz.core.ScriptAppDefinition;
+import net.progressit.scriptz.framework.ScriptAppDefinition;
 import net.progressit.scriptz.framework.ScriptzService;
 
 public class ScriptzUI extends JFrame{

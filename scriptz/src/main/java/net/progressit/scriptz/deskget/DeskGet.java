@@ -17,10 +17,10 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import net.miginfocom.swing.MigLayout;
-import net.progressit.scriptz.core.ScriptInternalFrame;
 import net.progressit.scriptz.deskget.DeskGetBO.DeskGetLogEventAsync;
 import net.progressit.scriptz.deskget.DeskGetBO.DeskPerson;
 import net.progressit.scriptz.deskget.DeskGetBO.DeskTicket;
+import net.progressit.scriptz.framework.ScriptInternalFrame;
 
 public class DeskGet  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;
