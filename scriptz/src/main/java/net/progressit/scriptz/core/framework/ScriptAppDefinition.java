@@ -7,6 +7,17 @@ import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+/**
+ * This is where the Script App defines itself, and by these hooks it will be initialized.
+ * 
+ * <p>A reference to the environment will provided via the AppContext, which the Script app can keep a 
+ * reference to in order to interact with the framework.
+ * 
+ * @author theo
+ *
+ * @param <T>
+ * @param <V>
+ */
 public interface ScriptAppDefinition<T,V> {
 	
 	public enum ScriptStandardMenu{ FILE, SCRIPTS }

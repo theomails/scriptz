@@ -9,13 +9,14 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.swing.JDesktopPane;
 
-import net.progressit.scriptz.ScriptzUI;
 import net.progressit.scriptz.ScriptzUI.ScriptzCoreConfig;
 import net.progressit.scriptz.core.app.ScriptCoreAppDefinition;
 
 /**
- * Provides access to all scriptz definitons.
- * <p>On-demand the entire config is loaded... hence it could break at first call.
+ * Provides access to all Scriptz definitons.
+ * 
+ * <p>On first demand for an app definition, all the app defenitions are loaded. However, the script app UI's or helpers are not initialized.
+ * 
  * @return
  */
 public class ScriptzService {

@@ -12,6 +12,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
+/**
+ * This is one of the most important framework services provided - storage of Config / State to local file system.
+ * 
+ * <p>This also delegates to the State migration service automatically to upgrade versions. Version upgrades should
+ * be supported (if version number changes from 1). Empty version numbers for default data will not be supported.
+ * 
+ * <p>If a script itself doesn't support Config or State data, then it need not call the related methods via the 
+ * App Context. If called, then the related set of Class, upgradeVersion logic and Defaults need to be supported together (in the App Definition). 
+ * 
+ * @author theo
+ *
+ */
 public class ScriptLocalStateService {
 	
 	public static class ScriptLocalStateServiceException extends RuntimeException{

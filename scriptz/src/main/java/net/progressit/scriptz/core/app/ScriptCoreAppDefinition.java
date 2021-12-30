@@ -4,12 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import net.progressit.scriptz.ScriptzUI;
 import net.progressit.scriptz.ScriptzUI.ScriptDetails;
 import net.progressit.scriptz.ScriptzUI.ScriptzCoreConfig;
 import net.progressit.scriptz.core.framework.AbstractScriptAppDefinition;
 import net.progressit.scriptz.core.framework.ScriptAppContext;
 
+/**
+ * The UI core of the Scriptz system also uses some of the framework features like load/store of config files.
+ * 
+ * <p>Hence, the core app also provides a Script App Definition.
+ *  
+ * @author theo
+ *
+ */
 public class ScriptCoreAppDefinition extends AbstractScriptAppDefinition<ScriptzCoreConfig, Object> {
 	@Override
 	public void setAppContext(ScriptAppContext context) {
@@ -46,6 +53,8 @@ public class ScriptCoreAppDefinition extends AbstractScriptAppDefinition<Scriptz
 		return currentData;
 	}
 
+	//PRIVATE
+	
 	private void ensureScriptDetailsCollection(ScriptzCoreConfig currentData) {
 		Map<String, ScriptDetails> detailsMap = currentData.getScriptDetails();
 		if (detailsMap == null) {

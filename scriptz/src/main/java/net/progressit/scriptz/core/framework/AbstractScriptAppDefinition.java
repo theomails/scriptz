@@ -9,8 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import net.progressit.scriptz.core.framework.ScriptAppDefinition.ScriptStandardMenu;
-
 public abstract class AbstractScriptAppDefinition<T,V> implements ScriptAppDefinition<T,V>{
 
 	@Override
