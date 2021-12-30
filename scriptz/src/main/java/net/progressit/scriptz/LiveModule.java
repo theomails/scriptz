@@ -3,7 +3,7 @@ package net.progressit.scriptz;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 
-import net.progressit.scriptz.framework.ScriptLocalStateService;
+import net.progressit.scriptz.core.framework.ScriptLocalStateService;
 
 public class LiveModule extends AbstractModule{
 

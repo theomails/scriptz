@@ -19,8 +19,8 @@ import com.google.inject.Inject;
 
 import lombok.Builder;
 import lombok.Data;
-import net.progressit.scriptz.framework.ScriptAppDefinition;
-import net.progressit.scriptz.framework.ScriptzService;
+import net.progressit.scriptz.core.framework.ScriptAppDefinition;
+import net.progressit.scriptz.core.framework.ScriptzService;
 
 public class ScriptzUI extends JFrame{
 	private static final long serialVersionUID = 1L;

@@ -1,8 +1,8 @@
-package net.progressit.scriptz.framework;
+package net.progressit.scriptz.core.framework;
 
 import com.google.inject.Inject;
 
-import net.progressit.scriptz.framework.ScriptLocalStateService.ScriptLocalStateType;
+import net.progressit.scriptz.core.framework.ScriptLocalStateService.ScriptLocalStateType;
 
 public class ScriptLocalStateMigrationService {
 	

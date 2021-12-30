@@ -12,7 +12,7 @@ import javax.swing.JTextArea;
 import com.google.common.eventbus.EventBus;
 
 import net.miginfocom.swing.MigLayout;
-import net.progressit.scriptz.framework.ScriptInternalFrame;
+import net.progressit.scriptz.core.framework.ScriptInternalFrame;
 
 public class DeskTextFormat  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;

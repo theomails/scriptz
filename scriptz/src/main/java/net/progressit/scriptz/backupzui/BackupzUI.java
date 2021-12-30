@@ -12,7 +12,7 @@ import com.google.common.eventbus.EventBus;
 import net.miginfocom.swing.MigLayout;
 import net.progressit.backupzui.logic.BackupService;
 import net.progressit.backupzui.ui.RunBackupPanel;
-import net.progressit.scriptz.framework.ScriptInternalFrame;
+import net.progressit.scriptz.core.framework.ScriptInternalFrame;
 
 public class BackupzUI  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;

@@ -25,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 import net.progressit.backupzui.ui.LimitLinesDocumentListener;
 import net.progressit.scriptz.compressui.CompressBO.CompressLogEvent;
 import net.progressit.scriptz.compressui.CompressBO.CompressionPlan;
-import net.progressit.scriptz.framework.ScriptInternalFrame;
+import net.progressit.scriptz.core.framework.ScriptInternalFrame;
 
 public class CompressUI  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;

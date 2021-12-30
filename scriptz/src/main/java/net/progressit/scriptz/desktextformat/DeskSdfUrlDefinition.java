@@ -9,7 +9,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import net.progressit.scriptz.core.framework.AbstractScriptAppDefinition;
-import net.progressit.scriptz.framework.ScriptAppContext;
+import net.progressit.scriptz.core.framework.ScriptAppContext;
 
 public class DeskSdfUrlDefinition extends AbstractScriptAppDefinition<Object, Object>{
 

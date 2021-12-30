@@ -1,4 +1,4 @@
-package net.progressit.scriptz.framework;
+package net.progressit.scriptz.core.framework;
 
 import java.io.File;
 import java.io.FileReader;
