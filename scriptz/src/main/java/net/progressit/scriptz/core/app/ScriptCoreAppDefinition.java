@@ -37,6 +37,7 @@ public class ScriptCoreAppDefinition extends AbstractScriptAppDefinition<Scriptz
 		Integer version = currentData.getVersion();
 		
 		if (version == null) {
+			@SuppressWarnings("deprecation")
 			Map<String, Boolean> scriptStatuses = currentData.getScriptStatus();
 			Set<String> scriptNames = scriptStatuses.keySet();
 			for (String scriptName : scriptNames) {
@@ -64,6 +65,8 @@ public class ScriptCoreAppDefinition extends AbstractScriptAppDefinition<Scriptz
 
 	@Override
 	public ScriptzCoreConfig getConfigDefaults() {
-		return new ScriptzCoreConfig();
+		ScriptzCoreConfig defaults = new ScriptzCoreConfig();
+		defaults.setVersion(1); //Latest version
+		return defaults;
 	}
 }

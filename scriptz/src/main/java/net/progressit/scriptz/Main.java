@@ -16,6 +16,8 @@ public class Main {
 			e.printStackTrace();
 		}
 		
+		//WebLookAndFeel.install();
+		
 		Injector injector = Guice.createInjector(new LiveModule());
 		ScriptzUI ui = injector.getInstance( ScriptzUI.class );
 		ui.init();
@@ -27,4 +29,5 @@ public class Main {
 		ui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ui.setTitle("Scriptz");
 	}
+	
 }

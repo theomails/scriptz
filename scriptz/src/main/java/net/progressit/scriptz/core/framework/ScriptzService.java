@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.swing.JDesktopPane;
 
+import net.progressit.scriptz.ScriptzUI.ScriptDetails;
 import net.progressit.scriptz.ScriptzUI.ScriptzCoreConfig;
 import net.progressit.scriptz.core.app.ScriptCoreAppDefinition;
 
@@ -23,17 +24,20 @@ public class ScriptzService {
 	private static final ScriptAppDefinition<ScriptzCoreConfig, Object> SCRIPT_CORE_APP_DEFINITION = new ScriptCoreAppDefinition();
 	
 	private final ScriptLocalStateService localStateService;
-	private final JDesktopPane dpMain;
+	private JDesktopPane dpMain;
 
 	@Inject
-	public ScriptzService(ScriptLocalStateService localStateService, JDesktopPane dpMain) {
+	public ScriptzService(ScriptLocalStateService localStateService) {
 		super();
 		this.localStateService = localStateService;
-		this.dpMain = dpMain;
 	}
 
 	@SuppressWarnings("rawtypes")
-	private final Map<String, ScriptAppDefinition> loadedDefinitions = new LinkedHashMap<>(); 
+	private final Map<String, ScriptAppDefinition> loadedDefinitions = new LinkedHashMap<>();
+	
+	public void setContainer(JDesktopPane dpMain) {
+		this.dpMain = dpMain;
+	}
 
 	/**
 	 * Warning: Lazy load enabled. Can trigger the loading of entire scripts definition.
@@ -65,10 +69,10 @@ public class ScriptzService {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void loadDefinitions() {
 		ScriptzCoreConfig coreConfig = (ScriptzCoreConfig) localStateService.loadConfig(SCRIPT_CORE_APP_DEFINITION);
-		Set<String> scriptClassNames = coreConfig.getScriptStatus().keySet();
+		Set<String> scriptClassNames = coreConfig.getScriptDetails().keySet();
 		for(String scriptClassName: scriptClassNames) {
-			boolean stateEnabled = coreConfig.getScriptStatus().get(scriptClassName);
-			if(stateEnabled) {
+			ScriptDetails scriptDetails = coreConfig.getScriptDetails().get(scriptClassName);
+			if(scriptDetails.isEnabled()) {
 				ScriptAppDefinition appDefinition = null;
 				Class<?> scriptClass;
 				try {

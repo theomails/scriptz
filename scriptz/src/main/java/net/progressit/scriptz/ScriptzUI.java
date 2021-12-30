@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 
 import com.google.inject.Inject;
 
@@ -27,9 +28,13 @@ public class ScriptzUI extends JFrame{
 	
 	@Data
 	public static class ScriptzCoreConfig{
-		private Integer version = 1;
-		private Map<String, Boolean> scriptStatus = new LinkedHashMap<>();
+		private Integer version;
+		private Map<String, Boolean> scriptStatus = null;
 		private Map<String, ScriptDetails> scriptDetails = new LinkedHashMap<>();
+		@Deprecated
+		public Map<String, Boolean> getScriptStatus(){
+			return scriptStatus;
+		}
 	}
 	@Data
 	@Builder
@@ -49,7 +54,8 @@ public class ScriptzUI extends JFrame{
 	
 	private JPanel pnlWrapper = new JPanel(new BorderLayout());
 	private JDesktopPane dpMain = new JDesktopPane();
-	private JPanel toolbar = new JPanel(new FlowLayout(FlowLayout.LEADING, 10, 2));
+	//private JPanel toolbar = new JPanel(new FlowLayout(FlowLayout.LEADING, 10, 2));
+	private JToolBar toolbar = new JToolBar();
 	private JMenuBar menubar = new JMenuBar();
 	private JMenu mnuFile = new JMenu();
 	private JMenu mnuScripts = new JMenu();
@@ -65,9 +71,12 @@ public class ScriptzUI extends JFrame{
 		pnlWrapper.add(dpMain, BorderLayout.CENTER);
 		
 		toolbar.setAlignmentX(LEFT_ALIGNMENT);
-		loadToolbar();
 		
 		dpMain.setBackground(Color.gray);
+		
+		//Process definitions
+		scriptzService.setContainer(dpMain);
+		loadToolbar();
 	}
 
 	
@@ -76,6 +85,7 @@ public class ScriptzUI extends JFrame{
 		Set<String> loadedClassNames = scriptzService.getScriptNames();
 		for(String loadedClassName:loadedClassNames) {
 			ScriptAppDefinition appDefn = scriptzService.getDefinition(loadedClassName);
+			//TODO: Menus support
 			List<JButton> appToolButtons = appDefn.getToolButtons();
 			for(JButton appBtn:appToolButtons) {
 				//The button should be ready, with handler added by the App itself.

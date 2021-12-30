@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "scriptDetails": {
+    "net.progressit.scriptz.backupzui.BackupzUIDefinition": {
+      "enabled": true,
+      "showInBar": true
+    },
+    "net.progressit.scriptz.compressui.CompressUIDefinition": {
+      "enabled": true,
+      "showInBar": true
+    },
+    "net.progressit.scriptz.dbdiff.DBDiffUIDefinition": {
+      "enabled": true,
+      "showInBar": true
+    },
+    "net.progressit.scriptz.deskget.DeskGetDefinition": {
+      "enabled": true,
+      "showInBar": true
+    },
+    "net.progressit.scriptz.desktextformat.DeskSdfUrlDefinition": {
+      "enabled": true,
+      "showInBar": true
+    },
+    "net.progressit.scriptz.desktextformat.DeskTextFormatDefinition": {
+      "enabled": true,
+      "showInBar": true
+    },
+    "net.progressit.scriptz.folderui.FolderUIDefinition": {
+      "enabled": true,
+      "showInBar": true
+    },
+    "net.progressit.scriptz.jsonformat.JsonFormatDefinition": {
+      "enabled": true,
+      "showInBar": true
+    },
+    "net.progressit.scriptz.projectstouch.ProjectsTouchDefinition": {
+      "enabled": true,
+      "showInBar": true
+    }
+  }
+}

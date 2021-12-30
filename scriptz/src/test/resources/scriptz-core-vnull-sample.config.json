@@ -1,0 +1,13 @@
+{
+  "scriptStatus": {
+  	"net.progressit.scriptz.backupzui.BackupzUIDefinition":true,
+  	"net.progressit.scriptz.compressui.CompressUIDefinition":true,
+ 	"net.progressit.scriptz.dbdiff.DBDiffUIDefinition":true,
+ 	"net.progressit.scriptz.deskget.DeskGetDefinition":true,
+ 	"net.progressit.scriptz.desktextformat.DeskSdfUrlDefinition":true,
+ 	"net.progressit.scriptz.desktextformat.DeskTextFormatDefinition":true,
+  	"net.progressit.scriptz.folderui.FolderUIDefinition":true,
+  	"net.progressit.scriptz.jsonformat.JsonFormatDefinition":true,
+  	"net.progressit.scriptz.projectstouch.ProjectsTouchDefinition":true
+  }
+}
