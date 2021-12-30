@@ -1,4 +1,4 @@
-package net.progressit.scriptz.framework;
+package net.progressit.scriptz.core.framework;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +8,9 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
+import net.progressit.scriptz.framework.ScriptAppDefinition;
+import net.progressit.scriptz.framework.ScriptAppDefinition.ScriptStandardMenu;
 
 public abstract class AbstractScriptAppDefinition<T,V> implements ScriptAppDefinition<T,V>{
 
