@@ -1,4 +1,4 @@
-package net.progressit.scriptz.swingsupport;
+package net.progressit.swingsupport;
 
 
 import javax.swing.*;
