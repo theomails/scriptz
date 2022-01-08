@@ -24,11 +24,15 @@ public class JsonOrderedFormatBO {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private Map<String, Object> getOrdered(Map<String, Object> jsonData) {
+		//Res container
 		Map<String,Object> outOrderedData = new LinkedHashMap<String, Object>();
+		
+		//Sort keys
 		Set<String> keys = jsonData.keySet();
 		List<String> orderedKeys = new ArrayList<>(keys.size());
 		orderedKeys.addAll(keys);
 		Collections.sort(orderedKeys);
+		
 		for(String key:orderedKeys) {
 			System.out.println(key);
 			Object val = jsonData.get(key);
@@ -40,7 +44,8 @@ public class JsonOrderedFormatBO {
 				outOrderedData.put(key, val); //Copy the same list.
 				List valList = (List) val;
 				for(int i=0;i<valList.size();i++) {
-					Object valInner = valList.get(0);
+					Object valInner = valList.get(i);
+					
 					if(valInner instanceof Map) {
 						Map<String,Object> valMap = (Map<String,Object>) valInner;
 						Map<String,Object> outOrderedVal = getOrdered(valMap);
