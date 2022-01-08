@@ -1,4 +1,4 @@
-package net.progressit.scriptz.folderui;
+package net.progressit.scriptz.chatclean;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +11,7 @@ import javax.swing.JMenuItem;
 import net.progressit.scriptz.core.framework.AbstractScriptAppDefinition;
 import net.progressit.scriptz.core.framework.ScriptAppContext;
 
-public class FolderUIDefinition extends AbstractScriptAppDefinition<Object, Object> {
+public class ChatCleanDefinition extends AbstractScriptAppDefinition<Object, Object> {
 
 	private ScriptAppContext context = null;
 	
@@ -22,22 +22,12 @@ public class FolderUIDefinition extends AbstractScriptAppDefinition<Object, Obje
 
 	@Override
 	public String getName() {
-		return "Folder UI";
+		return "Chat Clean";
 	}
-
 
 	@Override
 	public Map<ScriptStandardMenu, JMenuItem> getStandardMenuItems() {
-		
-		JMenuItem miThisScriptUi = new JMenuItem( getName() );
-		miThisScriptUi.addActionListener( (e)->{
-			FolderUI sif = new FolderUI();
-			context.displayAndInitFrame(sif);
-		} );
-		
-		Map<ScriptStandardMenu, JMenuItem> res = new HashMap<>();
-		res.put(ScriptStandardMenu.SCRIPTS, miThisScriptUi);
-		return res;
+		return new HashMap<>();
 	}
 
 	@Override
@@ -47,7 +37,14 @@ public class FolderUIDefinition extends AbstractScriptAppDefinition<Object, Obje
 
 	@Override
 	public List<JButton> getToolButtons() {
-		return List.of();
+		
+		JButton btnFThisApp = new JButton( getName() );
+		btnFThisApp.addActionListener( (e)->{
+			ChatCleanUI sif = new ChatCleanUI();
+			context.displayAndInitFrame(sif);
+		} );
+		
+		return List.of(btnFThisApp);
 	}
 
 }

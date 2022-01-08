@@ -1,6 +1,5 @@
 package net.progressit.scriptz.jsonformat;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,9 +24,10 @@ public class JsonFormatDefinition extends AbstractScriptAppDefinition<Object, Ob
 		return "Json Format";
 	}
 
+
 	@Override
 	public Map<ScriptStandardMenu, JMenuItem> getStandardMenuItems() {
-		return new HashMap<>();
+		return null;
 	}
 
 	@Override
@@ -38,12 +38,12 @@ public class JsonFormatDefinition extends AbstractScriptAppDefinition<Object, Ob
 	@Override
 	public List<JButton> getToolButtons() {
 		
-		JButton btnFolderUI = new JButton( getName() );
-		btnFolderUI.addActionListener( (e)->{
+		JButton btnThisScriptUi = new JButton( getName() );
+		btnThisScriptUi.addActionListener( (e)->{
 			JsonFormat sif = new JsonFormat();
 			context.displayAndInitFrame(sif);
 		} );
 		
-		return List.of(btnFolderUI);
+		return List.of(btnThisScriptUi);
 	}
 }

@@ -27,7 +27,16 @@ public class DBDiffUIDefinition extends AbstractScriptAppDefinition<Object, Obje
 
 	@Override
 	public Map<ScriptStandardMenu, JMenuItem> getStandardMenuItems() {
-		return new HashMap<>();
+		
+		JMenuItem miThisScriptUi = new JMenuItem( getName() );
+		miThisScriptUi.addActionListener( (e)->{
+			DBDiffUI sif = new DBDiffUI();
+			context.displayAndInitFrame(sif);
+		} );
+		
+		Map<ScriptStandardMenu, JMenuItem> res = new HashMap<>();
+		res.put(ScriptStandardMenu.SCRIPTS, miThisScriptUi);
+		return res;
 	}
 
 	@Override
@@ -37,14 +46,7 @@ public class DBDiffUIDefinition extends AbstractScriptAppDefinition<Object, Obje
 
 	@Override
 	public List<JButton> getToolButtons() {
-		
-		JButton btnFolderUI = new JButton( getName() );
-		btnFolderUI.addActionListener( (e)->{
-			DBDiffUI sif = new DBDiffUI();
-			context.displayAndInitFrame(sif);
-		} );
-		
-		return List.of(btnFolderUI);
+		return List.of();
 	}
 
 }

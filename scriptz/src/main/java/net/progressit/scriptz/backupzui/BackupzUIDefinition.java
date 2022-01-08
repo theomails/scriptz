@@ -32,21 +32,12 @@ public class BackupzUIDefinition extends AbstractScriptAppDefinition<Object, Obj
 		return "Backupz UI";
 	}
 
+
 	@Override
 	public Map<ScriptStandardMenu, JMenuItem> getStandardMenuItems() {
-		return new HashMap<>();
-	}
-
-	@Override
-	public JMenu getMenu() {
-		return null;
-	}
-
-	@Override
-	public List<JButton> getToolButtons() {
 		
-		JButton btnFolderUI = new JButton( getName() );
-		btnFolderUI.addActionListener( (e)->{
+		JMenuItem miThisScriptUi = new JMenuItem( getName() );
+		miThisScriptUi.addActionListener( (e)->{
 			if(injector==null) {
 				injector = Main.getBackupzInjector();
 			}
@@ -57,7 +48,18 @@ public class BackupzUIDefinition extends AbstractScriptAppDefinition<Object, Obj
 			context.displayAndInitFrame(sif);
 		} );
 		
-		return List.of(btnFolderUI);
+		Map<ScriptStandardMenu, JMenuItem> res = new HashMap<>();
+		res.put(ScriptStandardMenu.SCRIPTS, miThisScriptUi);
+		return res;
 	}
 
+	@Override
+	public JMenu getMenu() {
+		return null;
+	}
+
+	@Override
+	public List<JButton> getToolButtons() {
+		return List.of();
+	}
 }
