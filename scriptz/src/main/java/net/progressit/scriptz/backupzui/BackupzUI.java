@@ -24,7 +24,7 @@ public class BackupzUI  extends  ScriptInternalFrame{
 	public BackupzUI(BackupService backupService) {
 		super("Backupz UI", true, true, true, true);
 		
-		this.runPanel = new RunBackupPanel(backupService, bus);
+		this.runPanel = new RunBackupPanel(backupService);
 	}
 	
 	private JPanel mainPanel = new JPanel(new MigLayout("insets 10","[][600::,grow 3,fill]","[500::,grow,fill][]"));
