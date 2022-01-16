@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.progressit</groupId>
 	<artifactId>scriptz</artifactId>
-	<version>0.1.1</version>
+	<version>0.1.2</version>
 	<name>Scriptz</name>
 	<description>Useful scripts</description>
 	<properties>
@@ -48,7 +48,7 @@
 		<dependency>
 			<groupId>net.progressit</groupId>
 			<artifactId>progressive</artifactId>
-			<version>0.1.0</version>
+			<version>0.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>net.progressit</groupId>
@@ -58,7 +58,7 @@
 		<dependency>
 			<groupId>net.progressit</groupId>
 			<artifactId>backupzui</artifactId>
-			<version>0.1.1</version>
+			<version>0.1.3</version>
 		</dependency>
 		<dependency>
 			<groupId>net.progressit</groupId>
