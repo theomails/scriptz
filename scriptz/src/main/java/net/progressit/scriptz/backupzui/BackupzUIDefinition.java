@@ -11,7 +11,7 @@ import javax.swing.JMenuItem;
 import com.google.inject.Injector;
 
 import net.progressit.backupzui.Main;
-import net.progressit.backupzui.logic.BackupService;
+import net.progressit.backupzui.logic.RealBackupService;
 import net.progressit.scriptz.core.framework.AbstractScriptAppDefinition;
 import net.progressit.scriptz.core.framework.ScriptAppContext;
 
@@ -42,7 +42,7 @@ public class BackupzUIDefinition extends AbstractScriptAppDefinition<Object, Obj
 				injector = Main.getBackupzInjector();
 			}
 			
-			BackupService backupService = injector.getInstance(BackupService.class);
+			RealBackupService backupService = injector.getInstance(RealBackupService.class);
 			BackupzUI sif = new BackupzUI(backupService);
 			
 			context.displayAndInitFrame(sif);

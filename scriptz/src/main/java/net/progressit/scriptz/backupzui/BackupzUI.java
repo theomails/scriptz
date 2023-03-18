@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import com.google.common.eventbus.EventBus;
 
 import net.miginfocom.swing.MigLayout;
-import net.progressit.backupzui.logic.BackupService;
+import net.progressit.backupzui.logic.RealBackupService;
 import net.progressit.backupzui.ui.RunBackupPanel;
 import net.progressit.scriptz.core.framework.ScriptInternalFrame;
 
@@ -21,7 +21,7 @@ public class BackupzUI  extends  ScriptInternalFrame{
 	private final EventBus bus = new EventBus();
 	
 	@Inject
-	public BackupzUI(BackupService backupService) {
+	public BackupzUI(RealBackupService backupService) {
 		super("Backupz UI", true, true, true, true);
 		
 		this.runPanel = new RunBackupPanel(backupService);

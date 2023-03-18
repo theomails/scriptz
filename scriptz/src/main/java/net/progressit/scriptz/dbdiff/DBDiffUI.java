@@ -17,9 +17,9 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import net.miginfocom.swing.MigLayout;
-import net.progressit.backupzui.ui.LimitLinesDocumentListener;
 import net.progressit.scriptz.core.framework.ScriptInternalFrame;
 import net.progressit.scriptz.dbdiff.DBDiffBO.DbDiffLogEvent;
+import net.progressit.swingsupport.LimitLinesDocumentListener;
 
 public class DBDiffUI  extends  ScriptInternalFrame{
 	private static final long serialVersionUID = 1L;
