@@ -88,7 +88,12 @@ public class JsonFormat  extends  ScriptInternalFrame{
 		} );
 		btnFormat.addActionListener( (e)->{
 			String text = taInput.getText();
-			String result = bo.orderAndFormatJson(text, cbPrettyPrint.isSelected(), cbSerializeNulls.isSelected());
+			String result = null;
+			try {
+				result = bo.orderAndFormatJson(text, cbPrettyPrint.isSelected(), cbSerializeNulls.isSelected());
+			}catch(RuntimeException ex) {
+				result = "Error while formatting JSON: " + ex.toString();
+			}
 			taResult.setText(result);
 		} );
 		btnCopy.addActionListener( (e)->{
